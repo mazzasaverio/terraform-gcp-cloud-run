@@ -35,6 +35,24 @@ variable "gcp_project_id" {
   type        = string
 }
 
+variable "gcp_service_account_email" {
+  description = "The email of the service account to grant access to the Cloud SQL instance."
+  type        = string
+}
 
 
 
+variable "gcp_db_password" {
+  description = "The password for the db user."
+  type        = string
+}
+
+variable "gcp_db_user" {
+  description = "The name of the db user."
+  type        = string
+}
+
+variable "gcp_db_name" {
+  description = "The name of the db."
+  type        = string
+}

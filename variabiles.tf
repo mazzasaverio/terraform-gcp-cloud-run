@@ -34,20 +34,20 @@ variable "gcp_network_name" {
 
 # ------------------------------- GCP SQL CLOUD ------------------------------- #
 
-# variable "db_password" {
-#   description = "The password for the db user."
-#   type        = string
-# }
+variable "gcp_db_password" {
+  description = "The password for the db user."
+  type        = string
+}
 
-# variable "db_user" {
-#   description = "The name of the db user."
-#   type        = string
-# }
+variable "gcp_db_user" {
+  description = "The name of the db user."
+  type        = string
+}
 
-# variable "db_name" {
-#   description = "The name of the db."
-#   type        = string
-# }
+variable "gcp_db_name" {
+  description = "The name of the db."
+  type        = string
+}
 
 variable "gcp_db_instance_name" {
   description = "The name of the db instance."
@@ -70,6 +70,8 @@ variable "gcp_db_istance_password" {
   description = "The password for the default user."
   default     = "my-cloud-sql-instance-password"
 }
+
+
 
 
 
