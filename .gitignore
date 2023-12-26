@@ -1,10 +1,19 @@
+custom_tree_and_files_corrected.txt
+code_report.py
+archive
+
+.pdf
+.env
+
 # Local .terraform directories
 **/.terraform/*
 
 # .tfstate files
 *.tfstate
 *.tfstate.*
-
+.terraform.lock.hcl
+.terraform
+*.backup
 # Crash log files
 crash.log
 crash.*.log

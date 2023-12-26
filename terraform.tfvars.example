@@ -1,0 +1,13 @@
+
+# Considera le seguenti come placeholder per i valori che devi inserire
+
+/* ----------------------------------- GCP ---------------------------------- */
+
+gcp_project_id                    = "project-gcp-v4"
+
+gcp_credentials_file              = "~/terraform_v14.json"
+
+gcp_region                        = "us-central1"
+gcp_zone                          = "us-central1-c"
+
+gcp_service_account_email         = "name-service-account-v4@project-gcp-v1.iam.gserviceaccount.com"
