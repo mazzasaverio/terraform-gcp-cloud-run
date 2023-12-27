@@ -4,7 +4,7 @@ archive
 src_test_process/certs
 .pdf
 .env
-
+*.pem
 certs/
 # Local .terraform directories
 **/.terraform/*
