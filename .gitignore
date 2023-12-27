@@ -1,7 +1,7 @@
 custom_tree_and_files_corrected.txt
 code_report.py
 archive
-
+*.pem
 .pdf
 .env
 # Local .terraform directories

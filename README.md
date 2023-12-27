@@ -1,52 +1,42 @@
-# Project Overview
+# Terraform Configuration for GCP Cloud SQL and Cloud Run Connection
 
-Questa repo contiene la configurazione terraform per connettere tramite connessione privata la cloud run associata a un immagine che legge al cloud sql gcp. Quindi imposta il connector tramite connessione privata
+This repository contains Terraform configurations to establish a private connection between Google Cloud Run and a Google Cloud SQL instance. It sets up the necessary infrastructure components, including VPC peerings, Cloud SQL, Cloud Run, and Pub/Sub, to facilitate a seamless and secure connection between these services.
 
 ## Prerequisites
 
-Before you begin
-Note: The name you use for your project must be between 4 and 30 characters. When you type the name, the form suggests a project ID, which you can edit. The project ID must be between 6 and 30 characters, with a lowercase letter as the first character. You can use a dash, lowercase letter, or digit for the remaining characters, but the last character cannot be a dash.
-In the Google Cloud console, on the project selector page, select or create a Google Cloud project.
+1. **Google Cloud Platform Account**: Create an account on the Google Cloud Platform (GCP). If you already have an account, proceed to the next step.
 
-Note: If you don't plan to keep the resources that you create in this procedure, create a project instead of selecting an existing project. After you finish these steps, you can delete the project, removing all resources associated with the project.
-Go to project selector
+2. **Project Creation**:
 
-Make sure that billing is enabled for your Google Cloud project.
+   - Create a new project in your GCP account. Assign it a unique name and keep track of the project ID for future reference.
 
-Enable the Cloud APIs necessary to run a Cloud SQL sample app on Cloud Run.
-Console
-gcloud
-Click the following button to open Cloud Shell, which provides command-line access to your Google Cloud resources directly from the browser. Cloud Shell can be used to run the gcloud commands presented throughout this quickstart.
+3. **Service Account Creation**:
 
-Open Cloud Shell
+   - In your GCP project, create a service account with Owner permissions. This account will be used to manage resources via Terraform.
+   - After creating the service account, generate a JSON key file. Store this file securely as it will be used to authenticate your Terraform configuration.
 
-Run the following gcloud command using Cloud Shell:
+4. **Billing**: Ensure that billing is enabled for your GCP project. This is necessary to use GCP resources that may incur costs.
 
-gcloud services enable compute.googleapis.com sqladmin.googleapis.com run.googleapis.com \
-containerregistry.googleapis.com cloudbuild.googleapis.com servicenetworking.googleapis.com
-This command enables the following APIs:
+### Enabling Required APIs
 
-Compute Engine API
-Cloud SQL Admin API
-Cloud Run API
-Container Registry API
-Cloud Build API
-Service Networking API
+To ensure your project can interact with necessary GCP services, enable the following APIs using the Google Cloud Shell:
 
-### Google Cloud
+1. **Open Google Cloud Shell**: Access the Cloud Shell directly from your browser, which provides a command-line interface to your GCP resources.
 
-Before starting, ensure you have completed the following preliminary steps:
+2. **Activate APIs**: Run the following command in the Cloud Shell to enable the required APIs:
 
-- Create a Google Cloud Platform account and create a project.
-- Create a service account (currently assumed to have Owner permissions).
-  - Generate a key and store the .json file in a safe location.
-- Enable the necessary APIs in your Google Cloud project:
-  - Cloud Resource Manager API
-  - Google Container Registry API
-  - Cloud Run API
-  - Service Networking API
-  - Compute Engine API
-  - Cloud SQL
+   ```bash
+   gcloud services enable compute.googleapis.com sqladmin.googleapis.com run.googleapis.com containerregistry.googleapis.com cloudbuild.googleapis.com servicenetworking.googleapis.com
+   ```
+
+   This command enables the following APIs:
+
+   - Compute Engine API: For managing VM instances and other compute resources.
+   - Cloud SQL Admin API: For managing Cloud SQL instances.
+   - Cloud Run API: For deploying and managing containerized applications.
+   - Container Registry API: For storing and managing container images.
+   - Cloud Build API: For automating builds of your software.
+   - Service Networking API: For service networking configuration and management.
 
 ### Create and download SSL server and client certificates
 
@@ -92,3 +82,8 @@ To recreate the connection (once deleted), you have to use the gcloud command as
 gcloud services vpc-peerings update --service=servicenetworking.googleapis.com --ranges=[Allocated_Range_Name] --network=[netowrk_name] --project=[project_id] --force
 Cause
 Creating a private connection is a one-time procedure. Generally this error generates, when you delete the previously created connection and allocated IP range and try recreating the new connection with previous allocated ranges.
+
+## Additional Resources
+
+- [Connecting Cloud Run to Cloud SQL](https://cloud.google.com/sql/docs/postgres/connect-run)
+- [Terraform Documentation](https://www.terraform.io/docs)
