@@ -1,7 +1,4 @@
 __pycache__
 .pytest_cache
 
-./src_test_process/certs
-certs
 
-*.pem

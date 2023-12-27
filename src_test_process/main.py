@@ -131,7 +131,7 @@ def process_pdf(bucket_name: str, pdf_key: str, SessionLocal, PDFModel):
 @app.post("/")
 async def api_process_pdf(request: Request):
     pdf_key = "aaaaaaa.pdf"
-    return await process_pdf("bucket-gcp-v1", pdf_key, SessionLocal, PDF)
+    return process_pdf("bucket-gcp-v1", pdf_key, SessionLocal, PDF)
 
 
 @app.get("/")

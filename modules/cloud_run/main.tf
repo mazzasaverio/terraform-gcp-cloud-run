@@ -30,7 +30,7 @@ resource "google_cloud_run_v2_service" "run_sql_service" {
       }
       env {
         name  = "INSTANCE_HOST"
-        value = "INSTANCE_HOST" // Replace with the actual instance host if needed
+        value = var.gcp_db_host
       }
       env {
         name  = "DB_ROOT_CERT"
