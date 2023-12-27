@@ -1,10 +1,11 @@
 custom_tree_and_files_corrected.txt
 code_report.py
 archive
-
+src_test_process/certs
 .pdf
 .env
 
+certs/
 # Local .terraform directories
 **/.terraform/*
 
