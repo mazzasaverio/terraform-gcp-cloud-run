@@ -17,6 +17,16 @@ module "vpc_peerings" {
 }
 
 
+module "storage" {
+  source                = "./modules/storage"
+  region                = var.gcp_region
+  gcp_project_id        = var.gcp_project_id
+  gcp_bucket_name       = var.gcp_bucket_name
+  gcp_pubsub_topic_name = var.gcp_pubsub_topic_name
+
+}
+
+
 module "cloud_sql" {
   source                    = "./modules/cloud_sql"
   gcp_network_name          = var.gcp_network_name
@@ -35,13 +45,24 @@ module "cloud_sql" {
 }
 
 
-resource "google_vpc_access_connector" "quickstart_connector" {
-  name          = "quickstart-connector"
-  network       = "default"
-  ip_cidr_range = "10.8.0.0/28"
-  machine_type  = "f1-micro"
-  min_instances = 2
-  max_instances = 3
-  region        = var.gcp_region
-  project       = var.gcp_project_id
+module "cloud_run" {
+  source = "./modules/cloud_run"
+
+  gcp_project_id       = var.gcp_project_id
+  gcp_region           = var.gcp_region
+  gcp_db_instance_name = var.gcp_db_instance_name
+  gcp_db_name          = var.gcp_db_name
+  gcp_db_user          = var.gcp_db_user
+  gcp_db_password      = var.gcp_db_password
+  gcp_network_name     = var.gcp_network_name
+  gcp_db_host          = var.gcp_db_host
+}
+
+module "pubsub" {
+  source                    = "./modules/pubsub"
+  cloud_run_service_url     = module.cloud_run.service_url
+  gcp_pubsub_topic_name     = var.gcp_pubsub_topic_name
+  gcp_project_id            = var.gcp_project_id
+  gcp_service_account_email = var.gcp_service_account_email
+
 }

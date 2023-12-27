@@ -64,15 +64,27 @@ variable "gcp_db_version" {
   type        = string
 }
 
-
-
 variable "gcp_db_istance_password" {
   description = "The password for the default user."
   default     = "my-cloud-sql-instance-password"
+}
+
+variable "gcp_db_host" {
+  description = "The host of the Cloud SQL instance."
+  type        = string
+}
+
+variable "gcp_bucket_name" {
+  description = "The name of the GCP bucket."
+  type        = string
 }
 
 
 
 
 
+variable "gcp_pubsub_topic_name" {
+  description = "The name of the GCP bucket."
+  type        = string
+}
 
