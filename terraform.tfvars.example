@@ -1,6 +1,7 @@
 /* ------------------------------ GCP ----------------------------- */
 
 gcp_project_id            = "your-gcp-project-id"
+gcp_credentials_file      = "~/terraform_v15.json"
 gcp_network_name          = "your-vpc-network-name"
 gcp_region                = "your-gcp-region"
 gcp_service_account_email = "your-service-account-email"
