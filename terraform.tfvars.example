@@ -1,13 +1,22 @@
+/* ------------------------------ GCP ----------------------------- */
 
-# Considera le seguenti come placeholder per i valori che devi inserire
+gcp_project_id            = "your-gcp-project-id"
+gcp_network_name          = "your-vpc-network-name"
+gcp_region                = "your-gcp-region"
+gcp_service_account_email = "your-service-account-email"
 
-/* ----------------------------------- GCP ---------------------------------- */
+/* ------------------------------ GCP CLOUD SQL ----------------------------- */
 
-gcp_project_id                    = "project-gcp-v4"
+gcp_db_instance_name      = "your-db-instance-name"
+gcp_db_version            = "POSTGRES_15" # or your preferred version
+gcp_db_user               = "your-db-user"
+gcp_db_password           = "your-db-password"
+gcp_db_name               = "your-db-name"
 
-gcp_credentials_file              = "~/terraform_v14.json"
+/* ------------------------------ GCP COMPUTE INSTANCE ----------------------------- */
 
-gcp_region                        = "us-central1"
-gcp_zone                          = "us-central1-c"
-
-gcp_service_account_email         = "name-service-account-v4@project-gcp-v1.iam.gserviceaccount.com"
+gcp_instance_name         = "your-instance-name"
+gcp_instance_type         = "e2-medium" # or your preferred type
+gcp_instance_zone         = "your-instance-zone"
+gcp_instance_image        = "ubuntu-os-cloud/ubuntu-2004-lts" # or your preferred image
+gcp_instance_tags         = ["tag1", "tag2"] # or your preferred tags

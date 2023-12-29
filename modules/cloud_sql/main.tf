@@ -1,21 +1,16 @@
 resource "google_sql_database_instance" "instance" {
   name             = var.gcp_db_instance_name
-  database_version = var.gcp_db_version
   region           = var.gcp_region
-
+  database_version = var.gcp_db_version
   settings {
-    tier = "db-custom-1-4096" # Adjust as needed
-
+    tier = "db-custom-2-7680"
     ip_configuration {
-      ipv4_enabled    = false
-      private_network = "projects/${var.gcp_project_id}/global/networks/${var.gcp_network_name}"
-      require_ssl     = true
+      ipv4_enabled    = "false"
+      private_network = var.network_id
     }
   }
-
-  root_password = var.gcp_db_istance_password
+  deletion_protection = false
 }
-
 
 resource "google_sql_user" "user" {
   name     = var.gcp_db_user
