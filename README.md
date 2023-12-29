@@ -47,3 +47,7 @@ Activate necessary GCP services by enabling the following APIs:
 
 - **Rename File**: Change the name of `terraform.tfvars.example` to `terraform.tfvars`.
 - **Insert Credentials**: Add your specific credentials into the `terraform.tfvars` file.
+
+Per aggiungere una chiave ssh esegui in locale
+
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"

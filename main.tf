@@ -79,6 +79,7 @@ module "compute_instance" {
   network_id                = module.network.network_id
   subnetwork_id             = module.network.subnetwork_id
   db_instance_ip_address    = module.cloud_sql.instance_ip_address
+  instance_ssh_public_key   = var.instance_ssh_public_key
 
   depends_on = [
     module.firewall,

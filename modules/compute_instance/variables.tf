@@ -60,3 +60,16 @@ variable "db_instance_ip_address" {
   description = "The private IP address of the Cloud SQL instance."
   type        = string
 }
+
+variable "instance_ssh_user" {
+  description = "The username to use for SSH access to the instance"
+  type        = string
+  default     = "ubuntu"
+}
+
+variable "instance_ssh_public_key" {
+  description = "The public key to use for SSH access to the instance"
+  type        = string
+}
+
+

@@ -18,10 +18,12 @@ resource "google_compute_instance" "app_instance" {
   }
 
   metadata = {
-    "db-user" = var.gcp_db_user
-    "db-pass" = var.gcp_db_password
-    "db-name" = var.gcp_db_name
-    "db-host" = var.db_instance_ip_address
+    "db-user"                 = var.gcp_db_user
+    "db-pass"                 = var.gcp_db_password
+    "db-name"                 = var.gcp_db_name
+    "db-host"                 = var.db_instance_ip_address
+    "instance-ssh-user"       = var.instance_ssh_user
+    "instance-ssh-public-key" = var.instance_ssh_public_key
   }
 
   metadata_startup_script = file("${path.module}/startup-script.sh")

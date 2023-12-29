@@ -82,5 +82,17 @@ variable "gcp_instance_tags" {
   default     = []
 }
 
+variable "instance_ssh_user" {
+  description = "The username to use for SSH access to the instance"
+  type        = string
+  default     = "ubuntu"
+}
+
+variable "instance_ssh_public_key" {
+  description = "The public key to use for SSH access to the instance"
+  type        = string
+}
+
+
 
 

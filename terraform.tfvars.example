@@ -21,3 +21,8 @@ gcp_instance_type         = "e2-medium" # or your preferred type
 gcp_instance_zone         = "your-instance-zone"
 gcp_instance_image        = "ubuntu-os-cloud/ubuntu-2004-lts" # or your preferred image
 gcp_instance_tags         = ["tag1", "tag2"] # or your preferred tags
+
+/* ------------------------------ SSH Configuration ----------------------------- */
+
+instance_ssh_user         = "ubuntu" 
+instance_ssh_public_key   = "add instance_ssh_public_key" 
