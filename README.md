@@ -1,84 +1,49 @@
-# Terraform Configuration for GCP Cloud SQL and Cloud Run Connection
+# Configuring GCP SQL Cloud - Compute Engine with Terraform
 
-This repository allows you to configure an SQL Cloud application through Terraform with a private IP connection with a GCP compute engine
+This repository provides the resources and instructions necessary to configure an SQL Cloud application through Terraform, enabling a private IP connection with a Google Cloud Platform (GCP) Compute Engine instance.
 
 ## Prerequisites
 
-1. **Google Cloud Platform Account**: Create an account on the Google Cloud Platform (GCP)
+### 1. Google Cloud Platform Account
 
-2. **Project Creation**: Create a new project in your GCP account. Assign it a unique name and keep track of the project ID for future reference.
+- **Sign Up**: Ensure you have an active account on the Google Cloud Platform. Sign up [here](https://cloud.google.com/) if you don't have one.
 
-3. **Service Account Creation**:
+### 2. Project Setup
 
-   - In your GCP project, create a service account with Owner permissions. This account will be used to manage resources via Terraform.
-   - After creating the service account, generate a JSON key file. Store this file securely as it will be used to authenticate your Terraform configuration.
+- **New Project**: Create a new project in your GCP account. Assign it a unique name for easy identification.
+- **Project ID**: Note down the project ID. It will be required for future configurations.
 
-4. **Billing**: Ensure that billing is enabled for your GCP project. This is necessary to use GCP resources that may incur costs.
+### 3. Service Account
 
-### Enabling Required APIs
+- **Create Service Account**: In your GCP project, create a service account with 'Owner' permissions. This account will be utilized by Terraform to manage GCP resources.
+- **Generate Key File**: Post creation, generate a JSON key for this service account. Securely store this key as it's vital for authenticating Terraform with GCP.
 
-To ensure your project can interact with necessary GCP services, enable the following APIs using the Google Cloud Shell:
+### 4. Billing
 
-1. **Open Google Cloud Shell**: Access the Cloud Shell directly from your browser, which provides a command-line interface to your GCP resources.
+- **Enable Billing**: Ensure that your GCP project has billing enabled. This is crucial for using GCP services that incur costs.
 
-2. **Activate APIs**: Run the following command in the Cloud Shell to enable the required APIs:
+## API Configuration
 
-   - Service Networking API
-   - Cloud SQL Admin API
-   - Compute Engine API
-   - Cloud Resource Manager API
+Activate necessary GCP services by enabling the following APIs:
 
-   ```bash
-   gcloud services enable compute.googleapis.com sqladmin.googleapis.com run.googleapis.com servicenetworking.googleapis.com
-   ```
+### 1. Google Cloud Shell
 
-<!--
-### Create and download SSL server and client certificates
+- **Access**: Use the Google Cloud Shell for command-line interactions with GCP resources. It can be accessed directly from your browser.
 
-1. In the Google Cloud console, go to the **Cloud SQL Instances** page.
+### 2. Enable APIs
 
-   [Go to Cloud SQL Instances](https://console.cloud.google.com/sql)
+- **Commands**: In the Cloud Shell, execute the following command to activate the required APIs:
 
-2. Click the `quickstart-instance` to see its **Overview** page
-3. Click the **Connections** tab.
-4. Under the **Security** section, click **Create client certificate**.
-5. In the **Create a client certificate** dialog, enter `quickstart-key` as the name and click **Create**.
-6. In the **New SSL certificate created** dialog, click each download link to download the certificates. Then, click **Close**.
+  - Service Networking API
+  - Cloud SQL Admin API
+  - Compute Engine API
+  - Cloud Resource Manager API
 
-   **Important:** Store this private key securely. If you lose it, you must create a new client certificate.
+  ```bash
+  gcloud services enable compute.googleapis.com sqladmin.googleapis.com servicenetworking.googleapis.com
+  ```
 
-Run the following command in Cloud Shell to build a Docker container and publish it to Container Registry. Replace **YOUR_PROJECT_ID** with your project's project id.
+### 3. Terraform Configuration
 
-    ```
-    gcloud builds submit --tag gcr.io/project-gcp-v1/run-sql
-    ```
-
-**Deploy the sample app**
-
-Di seguito i link utili:
-
-- https://cloud.google.com/sql/docs/postgres/connect-run
-
-Attenzione:
-
-Error while adding or updating a new subnet under VPC Private Service Connection
-
-bookmark_border
-Problem
-While creating or removing a private service connection, the below error was observed:
-
-Cannot modify allocated ranges in CreateConnection. Please use UpdateConnection.
-Environment
-VPC Networking
-Private Service Connection
-Solution
-To recreate the connection (once deleted), you have to use the gcloud command as mentioned below.
-
-gcloud services vpc-peerings update --service=servicenetworking.googleapis.com --ranges=[Allocated_Range_Name] --network=[netowrk_name] --project=[project_id] --force
-Cause
-Creating a private connection is a one-time procedure. Generally this error generates, when you delete the previously created connection and allocated IP range and try recreating the new connection with previous allocated ranges.
-
-## Additional Resources
-
-- [Connecting Cloud Run to Cloud SQL](https://cloud.google.com/sql/docs/postgres/connect-run)
-- [Terraform Documentation](https://www.terraform.io/docs) -->
+- **Rename File**: Change the name of `terraform.tfvars.example` to `terraform.tfvars`.
+- **Insert Credentials**: Add your specific credentials into the `terraform.tfvars` file.
