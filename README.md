@@ -48,6 +48,22 @@ Activate necessary GCP services by enabling the following APIs:
 - **Rename File**: Change the name of `terraform.tfvars.example` to `terraform.tfvars`.
 - **Insert Credentials**: Add your specific credentials into the `terraform.tfvars` file.
 
-Per aggiungere una chiave ssh esegui in locale
+## Useful Commands
 
+To add an SSH key, execute locally:
+
+```bash
 ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+```
+
+To connect via SSH:
+
+```bash
+ssh -i /path/to/your/private/key your_instance_username@external_ip_address
+```
+
+To test the connection to Cloud SQL:
+
+```bash
+psql -h private_ip_address -U database_user -d database_name
+```
