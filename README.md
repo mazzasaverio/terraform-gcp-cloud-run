@@ -1,14 +1,12 @@
 # Terraform Configuration for GCP Cloud SQL and Cloud Run Connection
 
-This repository contains Terraform configurations to establish a private connection between Google Cloud Run and a Google Cloud SQL instance. It sets up the necessary infrastructure components, including VPC peerings, Cloud SQL, Cloud Run, and Pub/Sub, to facilitate a seamless and secure connection between these services.
+This repository allows you to configure an SQL Cloud application through Terraform with a private IP connection with a GCP compute engine
 
 ## Prerequisites
 
-1. **Google Cloud Platform Account**: Create an account on the Google Cloud Platform (GCP). If you already have an account, proceed to the next step.
+1. **Google Cloud Platform Account**: Create an account on the Google Cloud Platform (GCP)
 
-2. **Project Creation**:
-
-   - Create a new project in your GCP account. Assign it a unique name and keep track of the project ID for future reference.
+2. **Project Creation**: Create a new project in your GCP account. Assign it a unique name and keep track of the project ID for future reference.
 
 3. **Service Account Creation**:
 
@@ -25,19 +23,16 @@ To ensure your project can interact with necessary GCP services, enable the foll
 
 2. **Activate APIs**: Run the following command in the Cloud Shell to enable the required APIs:
 
+   - Service Networking API
+   - Cloud SQL Admin API
+   - Compute Engine API
+   - Cloud Resource Manager API
+
    ```bash
-   gcloud services enable compute.googleapis.com sqladmin.googleapis.com run.googleapis.com containerregistry.googleapis.com cloudbuild.googleapis.com servicenetworking.googleapis.com
+   gcloud services enable compute.googleapis.com sqladmin.googleapis.com run.googleapis.com servicenetworking.googleapis.com
    ```
 
-   This command enables the following APIs:
-
-   - Compute Engine API: For managing VM instances and other compute resources.
-   - Cloud SQL Admin API: For managing Cloud SQL instances.
-   - Cloud Run API: For deploying and managing containerized applications.
-   - Container Registry API: For storing and managing container images.
-   - Cloud Build API: For automating builds of your software.
-   - Service Networking API: For service networking configuration and management.
-
+<!--
 ### Create and download SSL server and client certificates
 
 1. In the Google Cloud console, go to the **Cloud SQL Instances** page.
@@ -86,4 +81,4 @@ Creating a private connection is a one-time procedure. Generally this error gene
 ## Additional Resources
 
 - [Connecting Cloud Run to Cloud SQL](https://cloud.google.com/sql/docs/postgres/connect-run)
-- [Terraform Documentation](https://www.terraform.io/docs)
+- [Terraform Documentation](https://www.terraform.io/docs) -->

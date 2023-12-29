@@ -39,6 +39,10 @@ module "firewall" {
   network_name                  = module.network.network_id
   internal_traffic_source_range = "10.1.0.0/24"
   internet_access_source_ranges = ["0.0.0.0/0"]
+
+  depends_on = [
+    module.network
+  ]
 }
 
 
@@ -54,6 +58,10 @@ module "cloud_sql" {
   gcp_db_name               = var.gcp_db_name
   gcp_service_account_email = var.gcp_service_account_email
   network_id                = module.network.network_id
+
+  depends_on = [
+    module.network
+  ]
 }
 
 module "compute_instance" {
@@ -73,7 +81,8 @@ module "compute_instance" {
   db_instance_ip_address    = module.cloud_sql.instance_ip_address
 
   depends_on = [
-    module.firewall
+    module.firewall,
+    module.cloud_sql
   ]
 }
 
