@@ -94,5 +94,8 @@ variable "instance_ssh_public_key" {
 }
 
 
-
+variable "gcp_bucket_name" {
+  description = "The name of the bucket."
+  type        = string
+}
 

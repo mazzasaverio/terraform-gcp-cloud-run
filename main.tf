@@ -92,14 +92,14 @@ module "compute_instance" {
 
 
 
-# module "storage" {
-#   source                = "./modules/storage"
-#   region                = var.gcp_region
-#   gcp_project_id        = var.gcp_project_id
-#   gcp_bucket_name       = var.gcp_bucket_name
-#   gcp_pubsub_topic_name = var.gcp_pubsub_topic_name
+module "storage" {
+  source          = "./modules/storage"
+  region          = var.gcp_region
+  gcp_project_id  = var.gcp_project_id
+  gcp_bucket_name = var.gcp_bucket_name
+  # gcp_pubsub_topic_name = var.gcp_pubsub_topic_name
 
-# }
+}
 
 
 
