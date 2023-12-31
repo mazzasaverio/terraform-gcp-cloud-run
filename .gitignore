@@ -5,9 +5,7 @@ archive
 .pdf
 .env
 src_process_text
-modules/cloud_run
-modules/pubsub
-modules/storage
+
 # Local .terraform directories
 **/.terraform/*
 
