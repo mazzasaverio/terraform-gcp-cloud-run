@@ -101,6 +101,20 @@ module "storage" {
 
 }
 
+module "cloud_run" {
+  source = "./modules/cloud_run"
+
+  gcp_region            = var.gcp_region
+  gcp_db_user           = var.gcp_db_user
+  gcp_db_password       = var.gcp_db_password
+  gcp_db_name           = var.gcp_db_name
+  pdf_uploaded_topic_id = module.storage.pdf_uploaded_topic_id
+
+  network_id             = module.network.network_id
+  subnetwork_id          = module.network.subnetwork_id
+  db_instance_ip_address = module.cloud_sql.instance_ip_address
+}
+
 
 
 # module "cloud_run" {
