@@ -1,4 +1,4 @@
-# Terraform-GCP Configuration Guide
+# Terraform-GCP
 
 ## Introduction
 
@@ -34,26 +34,15 @@ This repository provides configurations for setting up various modular recipes u
 - **Authentication Required**: Connect Cloud Build to your GitHub account as authentication is required.
 - **Permissions**: Enable permissions for cloudbuild.gserviceaccount.com to deploy on Cloud Run via the Settings menu on the sidebar.
 
-## API Configuration
+## Enable APIs
 
-### 1. Google Cloud Shell
+Execute the following in Cloud Shell to enable required APIs:
 
-- **Access**: Use Google Cloud Shell for command-line interactions with GCP resources.
+```
+  bash gcloud services enable compute.googleapis.com  sqladmin.googleapis.com  servicenetworking.googleapis.com  pubsub.googleapis.com  run.googleapis.com  cloudbuild.googleapis.com
+```
 
-### 2. Enable APIs
-
-- **Commands**: Execute the following in Cloud Shell to enable required APIs:
-
-  ```bash gcloud services enable compute.googleapis.com \
-                        sqladmin.googleapis.com \
-                        servicenetworking.googleapis.com \
-                        pubsub.googleapis.com \
-                        run.googleapis.com \
-                        cloudbuild.googleapis.com
-
-  ```
-
-### 3. Terraform Configuration
+## Terraform Configuration
 
 - **Rename File**: Change `terraform.tfvars.example` to `terraform.tfvars`.
 - **Insert Credentials**: Add your credentials to the `terraform.tfvars` file.
@@ -72,10 +61,6 @@ This repository provides configurations for setting up various modular recipes u
   ```bash
   psql -h private_ip_address -U database_user -d database_name
   ```
-
-## Repository Structure
-
-Refer to the repository for module-specific Terraform configurations like `cloud_run`, `cloud_sql`, `compute_instance`, `firewall`, `network`, `pubsub`, and `storage`.
 
 ## Additional Information
 
