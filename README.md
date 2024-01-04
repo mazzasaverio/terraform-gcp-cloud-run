@@ -1,70 +1,68 @@
-# Configuring GCP SQL Cloud - Compute Engine with Terraform
+# Terraform-GCP Configuration Guide
 
-This repository provides the resources and instructions necessary to configure an SQL Cloud application through Terraform, enabling a private IP connection with a Google Cloud Platform (GCP) Compute Engine instance.
+## Introduction
+
+This repository provides Terraform scripts for configuring two primary services on Google Cloud Platform (GCP):
+
+1. **Compute Engine Instance with Private Connection to Cloud SQL**: Setup a secure, private connection between a Compute Engine instance and a Cloud SQL database.
+2. **Cloud Run (V2) with Direct VPC Connection to Cloud SQL**: Establish a Cloud Run service (version 2) with a Direct VPC connection to Cloud SQL, triggered by Pub/Sub messages for file uploads in a storage bucket.
 
 ## Prerequisites
 
 ### 1. Google Cloud Platform Account
 
-- **Sign Up**: Ensure you have an active account on the Google Cloud Platform. Sign up [here](https://cloud.google.com/) if you don't have one.
+- **Sign Up**: Ensure you have an active GCP account. [Sign up here](https://cloud.google.com/) if needed.
 
 ### 2. Project Setup
 
-- **New Project**: Create a new project in your GCP account. Assign it a unique name for easy identification.
-- **Project ID**: Note down the project ID. It will be required for future configurations.
+- **New Project**: Create a new GCP project. Note down the project ID for future use.
 
 ### 3. Service Account
 
-- **Create Service Account**: In your GCP project, create a service account with 'Owner' permissions. This account will be utilized by Terraform to manage GCP resources.
-- **Generate Key File**: Post creation, generate a JSON key for this service account. Securely store this key as it's vital for authenticating Terraform with GCP.
+- **Create Service Account**: Create a service account with 'Owner' permissions in your GCP project.
+- **Generate Key File**: Generate a JSON key file for this service account and store it securely.
 
 ### 4. Billing
 
-- **Enable Billing**: Ensure that your GCP project has billing enabled. This is crucial for using GCP services that incur costs.
+- **Enable Billing**: Ensure billing is enabled on your GCP project for using paid services.
 
 ## API Configuration
 
-Activate necessary GCP services by enabling the following APIs:
-
 ### 1. Google Cloud Shell
 
-- **Access**: Use the Google Cloud Shell for command-line interactions with GCP resources. It can be accessed directly from your browser.
+- **Access**: Use Google Cloud Shell for command-line interactions with GCP resources.
 
 ### 2. Enable APIs
 
-- **Commands**: In the Cloud Shell, execute the following command to activate the required APIs:
-
-  - Service Networking API
-  - Cloud SQL Admin API
-  - Compute Engine API
-  - Cloud Resource Manager API
-  - Cloud Run API
-
+- **Commands**: Execute the following in Cloud Shell to enable required APIs:
   ```bash
   gcloud services enable compute.googleapis.com sqladmin.googleapis.com servicenetworking.googleapis.com
   ```
 
 ### 3. Terraform Configuration
 
-- **Rename File**: Change the name of `terraform.tfvars.example` to `terraform.tfvars`.
-- **Insert Credentials**: Add your specific credentials into the `terraform.tfvars` file.
+- **Rename File**: Change `terraform.tfvars.example` to `terraform.tfvars`.
+- **Insert Credentials**: Add your credentials to the `terraform.tfvars` file.
 
 ## Useful Commands
 
-To add an SSH key, execute locally:
+- **Add SSH Key**:
+  ```bash
+  ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+  ```
+- **Connect via SSH**:
+  ```bash
+  ssh -i /path/to/your/private/key your_instance_username@external_ip_address
+  ```
+- **Test Cloud SQL Connection**:
+  ```bash
+  psql -h private_ip_address -U database_user -d database_name
+  ```
 
-```bash
-ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
-```
+## Repository Structure
 
-To connect via SSH:
+Refer to the repository for module-specific Terraform configurations like `cloud_run`, `cloud_sql`, `compute_instance`, `firewall`, `network`, `pubsub`, and `storage`.
 
-```bash
-ssh -i /path/to/your/private/key your_instance_username@external_ip_address
-```
+## Additional Information
 
-To test the connection to Cloud SQL:
-
-```bash
-psql -h private_ip_address -U database_user -d database_name
-```
+For detailed implementation, refer to the contents of specific `.tf` files within each module's directory.
