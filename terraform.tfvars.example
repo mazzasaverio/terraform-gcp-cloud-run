@@ -26,3 +26,10 @@ gcp_instance_tags         = ["tag1", "tag2"] # or your preferred tags
 
 instance_ssh_user         = "ubuntu" 
 instance_ssh_public_key   = "add instance_ssh_public_key" 
+
+/* ------------------------------ GCP Cloud Run ----------------------------- */
+
+gcp_pubsub_topic_name = "topic-gcp-v5"
+
+/* ------------------------------- Cloud Build ------------------------------ */
+repo_name = "clean-text"
