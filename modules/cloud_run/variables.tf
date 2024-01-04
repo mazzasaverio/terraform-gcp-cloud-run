@@ -38,3 +38,13 @@ variable "pdf_uploaded_topic_id" {
   type        = string
 }
 
+variable "gcp_project_id" {
+  description = "Project ID"
+  type        = string
+}
+
+variable "gcp_bucket_name" {
+  description = "Name of the GCS bucket"
+  type        = string
+}
+

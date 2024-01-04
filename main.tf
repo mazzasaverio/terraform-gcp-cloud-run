@@ -87,54 +87,37 @@ module "compute_instance" {
   ]
 }
 
-
-
-
-
-
 module "storage" {
-  source          = "./modules/storage"
-  region          = var.gcp_region
-  gcp_project_id  = var.gcp_project_id
-  gcp_bucket_name = var.gcp_bucket_name
-  # gcp_pubsub_topic_name = var.gcp_pubsub_topic_name
-
+  source                = "./modules/storage"
+  region                = var.gcp_region
+  gcp_project_id        = var.gcp_project_id
+  gcp_bucket_name       = var.gcp_bucket_name
+  gcp_pubsub_topic_name = var.gcp_pubsub_topic_name
 }
 
 module "cloud_run" {
   source = "./modules/cloud_run"
 
+  gcp_project_id        = var.gcp_project_id
   gcp_region            = var.gcp_region
   gcp_db_user           = var.gcp_db_user
   gcp_db_password       = var.gcp_db_password
   gcp_db_name           = var.gcp_db_name
-  pdf_uploaded_topic_id = module.storage.pdf_uploaded_topic_id
+  pdf_uploaded_topic_id = var.gcp_pubsub_topic_name
 
   network_id             = module.network.network_id
   subnetwork_id          = module.network.subnetwork_id
   db_instance_ip_address = module.cloud_sql.instance_ip_address
+  gcp_bucket_name        = module.storage.bucket_name
 }
 
 
 
-# module "cloud_run" {
-#   source = "./modules/cloud_run"
+module "pubsub" {
+  source                    = "./modules/pubsub"
+  cloud_run_service_url     = module.cloud_run.service_url
+  gcp_pubsub_topic_name     = var.gcp_pubsub_topic_name
+  gcp_project_id            = var.gcp_project_id
+  gcp_service_account_email = var.gcp_service_account_email
 
-#   gcp_project_id       = var.gcp_project_id
-#   gcp_region           = var.gcp_region
-#   gcp_db_instance_name = var.gcp_db_instance_name
-#   gcp_db_name          = var.gcp_db_name
-#   gcp_db_user          = var.gcp_db_user
-#   gcp_db_password      = var.gcp_db_password
-#   gcp_network_name     = var.gcp_network_name
-#   gcp_db_host          = var.gcp_db_host
-# }
-
-# module "pubsub" {
-#   source                    = "./modules/pubsub"
-#   cloud_run_service_url     = module.cloud_run.service_url
-#   gcp_pubsub_topic_name     = var.gcp_pubsub_topic_name
-#   gcp_project_id            = var.gcp_project_id
-#   gcp_service_account_email = var.gcp_service_account_email
-
-# }
+}

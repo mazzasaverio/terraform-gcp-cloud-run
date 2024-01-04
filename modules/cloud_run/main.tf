@@ -5,7 +5,7 @@ resource "google_cloud_run_v2_service" "pdf_processor_service" {
 
   template {
     containers {
-      image = "gcr.io/your-project-id/your-service-image"
+      image = "gcr.io/${var.gcp_project_id}/your-service-image:latest"
 
       env {
         name  = "DB_USER"
@@ -34,26 +34,6 @@ resource "google_cloud_run_v2_service" "pdf_processor_service" {
         subnetwork = var.subnetwork_id
         tags       = ["cloud-run-service"]
       }
-    }
-  }
-}
-
-resource "google_eventarc_trigger" "pdf_uploaded_trigger" {
-  name     = "pdf-uploaded-trigger"
-  location = var.gcp_region
-  destination {
-    cloud_run_service {
-      service = google_cloud_run_v2_service.pdf_processor_service.name
-      region  = var.gcp_region
-    }
-  }
-  matching_criteria {
-    attribute = "type"
-    value     = "google.cloud.storage.object.v1.finalized"
-  }
-  transport {
-    pubsub {
-      topic = var.pdf_uploaded_topic_id
     }
   }
 }

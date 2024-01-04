@@ -38,6 +38,7 @@ Activate necessary GCP services by enabling the following APIs:
   - Cloud SQL Admin API
   - Compute Engine API
   - Cloud Resource Manager API
+  - Cloud Run API
 
   ```bash
   gcloud services enable compute.googleapis.com sqladmin.googleapis.com servicenetworking.googleapis.com

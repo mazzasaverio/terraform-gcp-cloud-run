@@ -99,3 +99,7 @@ variable "gcp_bucket_name" {
   type        = string
 }
 
+variable "gcp_pubsub_topic_name" {
+  description = "The name of the Pub/Sub topic."
+  type        = string
+}
