@@ -2,10 +2,13 @@
 
 ## Introduction
 
-This repository provides Terraform scripts for configuring two primary services on Google Cloud Platform (GCP):
+This repository provides configurations for setting up various modular recipes using GCP services. Specifically:
 
-1. **Compute Engine Instance with Private Connection to Cloud SQL**: Setup a secure, private connection between a Compute Engine instance and a Cloud SQL database.
-2. **Cloud Run (V2) with Direct VPC Connection to Cloud SQL**: Establish a Cloud Run service (version 2) with a Direct VPC connection to Cloud SQL, triggered by Pub/Sub messages for file uploads in a storage bucket.
+- **VPC Configuration:** A new VPC is configured with the intent to utilize all services within a single VPC.
+- **Compute Engine Setup:** A compute engine is set up to read the Cloud SQL via a private IP, configured in another module. A `startup-script.sh` is included, which has code to establish SSH connection directly from the local machine.
+- **Cloud Run Creation:** A Cloud Run is created in version V2 with Direct VPC Connection to Cloud SQL.
+- **Automated Cloud Build Mechanism:** A mechanism is set where the cloud build is triggered automatically following the code push to the repository that builds the image. An example repository where you can find a sample `cloudbuild.yaml` is at [https://github.com/mazzasaverio/clean-text](https://github.com/mazzasaverio/clean-text). The test code within tests the connection with the Cloud SQL Postgres database via private IP using FastAPI and SQLAlchemy.
+  - As a result, the Cloud Run is always updated with the latest version of the image and is triggered every time a file is uploaded to the GCP storage.
 
 ## Prerequisites
 
@@ -25,6 +28,11 @@ This repository provides Terraform scripts for configuring two primary services 
 ### 4. Billing
 
 - **Enable Billing**: Ensure billing is enabled on your GCP project for using paid services.
+
+### 5. Connecting Cloud Build to Your GitHub Account
+
+- **Authentication Required**: Connect Cloud Build to your GitHub account as authentication is required.
+- **Permissions**: Enable permissions for cloudbuild.gserviceaccount.com to deploy on Cloud Run via the Settings menu on the sidebar.
 
 ## API Configuration
 
