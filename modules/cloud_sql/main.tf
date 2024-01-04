@@ -28,3 +28,4 @@ resource "google_project_iam_member" "cloudsql_client" {
   role    = "roles/cloudsql.client"
   member  = "serviceAccount:${var.gcp_service_account_email}"
 }
+
