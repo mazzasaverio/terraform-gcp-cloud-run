@@ -121,3 +121,13 @@ module "pubsub" {
   gcp_service_account_email = var.gcp_service_account_email
 
 }
+
+
+module "cloud_build_trigger" {
+  source         = "./modules/cloud_build_trigger"
+  gcp_project_id = var.gcp_project_id
+  repo_name      = var.repo_name
+}
+
+
+

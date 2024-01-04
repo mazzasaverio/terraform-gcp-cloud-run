@@ -103,3 +103,9 @@ variable "gcp_pubsub_topic_name" {
   description = "The name of the Pub/Sub topic."
   type        = string
 }
+
+
+variable "repo_name" {
+  description = "The name of the repository to create the trigger for the Cloud Build."
+  type        = string
+}

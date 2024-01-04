@@ -35,8 +35,14 @@ This repository provides Terraform scripts for configuring two primary services 
 ### 2. Enable APIs
 
 - **Commands**: Execute the following in Cloud Shell to enable required APIs:
-  ```bash
-  gcloud services enable compute.googleapis.com sqladmin.googleapis.com servicenetworking.googleapis.com
+
+  ```bash gcloud services enable compute.googleapis.com \
+                        sqladmin.googleapis.com \
+                        servicenetworking.googleapis.com \
+                        pubsub.googleapis.com \
+                        run.googleapis.com \
+                        cloudbuild.googleapis.com
+
   ```
 
 ### 3. Terraform Configuration
