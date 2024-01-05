@@ -33,3 +33,5 @@ gcp_pubsub_topic_name = "topic-gcp-v5"
 
 /* ------------------------------- Cloud Build ------------------------------ */
 repo_name = "clean-text"
+owner = "owner"
+branch = "branch"

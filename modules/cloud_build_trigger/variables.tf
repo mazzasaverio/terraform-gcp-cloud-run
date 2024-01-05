@@ -8,3 +8,12 @@ variable "repo_name" {
   type        = string
 }
 
+variable "owner" {
+  description = "The owner of the repository to create the trigger for the Cloud Build."
+  type        = string
+}
+
+variable "branch" {
+  description = "The branch of the repository to create the trigger for the Cloud Build."
+  type        = string
+}

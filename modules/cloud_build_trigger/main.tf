@@ -5,11 +5,11 @@ resource "google_cloudbuild_trigger" "github_master_push_trigger" {
   description = "Description of the trigger"
   filename    = "cloudbuild.yaml" # or the path to your build config file
   github {
-    owner = "mazzasaverio" # Replace with the GitHub owner name
-    name  = "clean-text"   # Replace with the GitHub repo name
+    owner = var.owner
+    name  = var.repo_name
 
     push {
-      branch = "master" # This is a regex for the branch
+      branch = var.branch
     }
   }
 }
