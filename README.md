@@ -7,7 +7,7 @@ This repository provides configurations for setting up various modular recipes u
 - **VPC Configuration:** A new VPC is configured with the intent to utilize all services within a single VPC.
 - **Compute Engine Setup:** A compute engine is set up to read the Cloud SQL via a private IP, configured in another module. A `startup-script.sh` is included, which has code to establish SSH connection directly from the local machine.
 - **Cloud Run Creation:** A Cloud Run is created in version V2 with Direct VPC Connection to Cloud SQL.
-- **Automated Cloud Build Mechanism:** A mechanism is set where the cloud build is triggered automatically following the code push to the repository that builds the image. An example repository where you can find a sample `cloudbuild.yaml` is at [https://github.com/mazzasaverio/clean-text](https://github.com/mazzasaverio/clean-text). The test code within tests the connection with the Cloud SQL Postgres database via private IP using FastAPI and SQLAlchemy.
+- **Automated Cloud Build Mechanism:** A mechanism is set where the cloud build is triggered automatically following the code push to the repository that builds the image. An example repository where you can find a sample `cloudbuild.yaml` is at [https://github.com/mazzasaverio/template-image-cloud-run](https://github.com/mazzasaverio/template-image-cloud-run). The test code within tests the connection with the Cloud SQL Postgres database via private IP using FastAPI and SQLAlchemy.
   - As a result, the Cloud Run is always updated with the latest version of the image and is triggered every time a file is uploaded to the GCP storage.
 
 ## Prerequisites
