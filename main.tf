@@ -25,6 +25,14 @@ provider "google-beta" {
   zone        = var.gcp_zone
 }
 
+module "secret_manager" {
+  source = "./modules/secret_manager"
+
+  gcp_project_id     = var.gcp_project_id
+  gcp_project_number = var.gcp_project_number
+  github_token       = var.github_token
+
+}
 
 module "network" {
   source = "./modules/network"
@@ -124,12 +132,19 @@ module "pubsub" {
 
 
 module "cloud_build_trigger" {
-  source         = "./modules/cloud_build_trigger"
-  gcp_project_id = var.gcp_project_id
-  repo_name      = var.repo_name
-  owner          = var.owner
-  branch         = var.branch
-}
+  source                         = "./modules/cloud_build_trigger"
+  gcp_project_id                 = var.gcp_project_id
+  repo_name                      = var.repo_name
+  branch                         = var.branch
+  github_gcp_installation_id     = var.github_gcp_installation_id
+  gcp_region                     = var.gcp_region
+  github_remote_uri              = var.github_remote_uri
+  github_token_secret_version_id = module.secret_manager.github_token_secret_version_id
 
+  depends_on = [
+    module.secret_manager,
+
+  ]
+}
 
 

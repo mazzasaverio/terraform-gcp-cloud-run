@@ -3,7 +3,10 @@ variable "gcp_project_id" {
   description = "The GCP project ID."
   type        = string
 }
-
+variable "gcp_project_number" {
+  description = "The GCP project number."
+  type        = string
+}
 variable "gcp_network_name" {
   description = "The name of the VPC network."
   type        = string
@@ -110,12 +113,24 @@ variable "repo_name" {
   type        = string
 }
 
-variable "owner" {
-  description = "The owner of the repository to create the trigger for the Cloud Build."
-  type        = string
-}
+
 
 variable "branch" {
   description = "The branch of the repository to create the trigger for the Cloud Build."
+  type        = string
+}
+
+variable "github_token" {
+  description = "The GitHub personal access token."
+  type        = string
+}
+
+variable "github_gcp_installation_id" {
+  description = "The GitHub App installation ID."
+  type        = string
+}
+
+variable "github_remote_uri" {
+  description = "The GitHub remote URI."
   type        = string
 }

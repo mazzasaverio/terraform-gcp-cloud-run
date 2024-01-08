@@ -32,6 +32,9 @@ instance_ssh_public_key   = "add instance_ssh_public_key"
 gcp_pubsub_topic_name = "topic-gcp-v5"
 
 /* ------------------------------- Cloud Build ------------------------------ */
-repo_name = "clean-text"
-owner = "owner"
-branch = "branch"
+repo_name = "template-image-cloud-run"
+branch = "master"
+
+github_token = "github_token"
+github_gcp_installation_id = "github_gcp_installation_id"
+github_remote_uri = "https://github.com/-/-.git"

@@ -31,21 +31,57 @@ This repository provides configurations for setting up various modular recipes u
 
 ### 5. Connecting Cloud Build to Your GitHub Account
 
-- **Authentication Required**: Connect Cloud Build to your GitHub account as authentication is required.
-- **Permissions**: Enable permissions for cloudbuild.gserviceaccount.com to deploy on Cloud Run via the Settings menu on the sidebar.
+- Create a personal access token. Make sure to set your token (classic) to have no expiration date and select the following permissions when prompted in GitHub: repo and read:user. If your app is installed in an organization, make sure to also select the read:org permission.
+
+https://cloud.google.com/build/docs/automating-builds/github/connect-repo-github?generation=2nd-gen#terraform_1
 
 ## Enable APIs
 
 Execute the following in Cloud Shell to enable required APIs:
 
 ```
-  bash gcloud services enable compute.googleapis.com  sqladmin.googleapis.com  servicenetworking.googleapis.com  pubsub.googleapis.com  run.googleapis.com  cloudbuild.googleapis.com
+  bash
+
+  gcloud services enable compute.googleapis.com sqladmin.googleapis.com servicenetworking.googleapis.com pubsub.googleapis.com run.googleapis.com cloudbuild.googleapis.com secretmanager.googleapis.com
 ```
 
 ## Terraform Configuration
 
 - **Rename File**: Change `terraform.tfvars.example` to `terraform.tfvars`.
 - **Insert Credentials**: Add your credentials to the `terraform.tfvars` file.
+
+## Connecting to Cloud SQL using Cloud SQL Proxy (Example with DBeaver)
+
+For a secure connection to your Cloud SQL instance from local development environments or database management tools like DBeaver, the Cloud SQL Proxy provides a robust solution. Follow these steps to set up and use the Cloud SQL Proxy:
+
+1. **Download the Cloud SQL Proxy**:
+   Use the command below to download the latest version of Cloud SQL Proxy for Linux:
+
+   ```bash
+   curl -o cloud-sql-proxy https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.8.1/cloud-sql-proxy.linux.amd64
+   ```
+
+2. **Make the Proxy Executable**:
+   Change the downloaded file's permissions to make it executable:
+
+   ```bash
+   chmod +x cloud-sql-proxy
+   ```
+
+3. **Start the Cloud SQL Proxy**:
+   Launch the proxy with your Cloud SQL instance details. Replace the `[INSTANCE_CONNECTION_NAME]` with your specific Cloud SQL instance connection name:
+
+   ```bash
+   ./cloud-sql-proxy --private-ip --credentials-file=/path/to/your/credentials.json --port 5433 [INSTANCE_CONNECTION_NAME]
+   ```
+
+4. **Connect using DBeaver**:
+   - Open DBeaver and create a new database connection.
+   - Set the host to `localhost` and the port to `5433` (or the port you specified).
+   - Provide your Cloud SQL instance's database credentials.
+
+For more details on using the Cloud SQL Proxy, visit the official documentation:
+[Google Cloud SQL Proxy Documentation](https://cloud.google.com/sql/docs/postgres/connect-auth-proxy)
 
 ## Useful Commands
 
