@@ -143,7 +143,6 @@ module "cloud_build_trigger" {
 
   depends_on = [
     module.secret_manager,
-
   ]
 }
 

@@ -16,7 +16,7 @@ resource "google_compute_firewall" "internal_traffic" {
     protocol = "icmp"
   }
 
-  source_ranges = [var.internal_traffic_source_range]
+  source_ranges = ["10.1.0.0/24"]
 }
 
 resource "google_compute_firewall" "internet_access" {
@@ -29,11 +29,13 @@ resource "google_compute_firewall" "internet_access" {
 
   allow {
     protocol = "tcp"
-    ports    = ["22", "80", "443", "3307"]
+    ports    = ["22", "80", "443"]
   }
 
-  source_ranges = var.internet_access_source_ranges
+  source_ranges = ["0.0.0.0/0"]
 }
+
+
 
 resource "google_compute_firewall" "cloud_sql_proxy" {
   name    = "allow-cloud-sql-proxy"
@@ -41,9 +43,9 @@ resource "google_compute_firewall" "cloud_sql_proxy" {
 
   allow {
     protocol = "tcp"
-    ports    = ["3307"]
+    ports    = ["5433", "3307"]
   }
 
-  source_ranges = ["79.21.151.251/32"]
+  source_ranges = ["79.21.151.251"]
   target_tags   = ["cloud-sql-proxy"]
 }

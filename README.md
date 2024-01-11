@@ -85,6 +85,12 @@ For more details on using the Cloud SQL Proxy, visit the official documentation:
 
 ## Useful Commands
 
+- **Perform only a few modules (attention to addictions)**:
+
+  ```bash
+  terraform apply -target=module.compute_instance
+  ```
+
 - **Add SSH Key**:
   ```bash
   ssh-keygen -t rsa -b 4096 -C "your_email@example.com"

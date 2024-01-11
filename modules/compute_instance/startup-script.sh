@@ -42,3 +42,11 @@ chown -R "${INSTANCE_USER}:${INSTANCE_USER}" "${SSH_DIR}"
 
 # Ensuring permissions are correct for the user's home directory
 chmod 755 "/home/${INSTANCE_USER}"
+
+
+# Installing Docker
+echo "Installing Docker and starting Docker service" >> $LOG_FILE
+sudo apt-get update >> $LOG_FILE 2>&1
+sudo apt-get install -y docker.io >> $LOG_FILE 2>&1
+sudo systemctl start docker >> $LOG_FILE 2>&1
+sudo systemctl enable docker >> $LOG_FILE 2>&1

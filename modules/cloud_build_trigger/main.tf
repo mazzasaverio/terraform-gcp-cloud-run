@@ -3,7 +3,7 @@
 resource "google_cloudbuildv2_connection" "my_connection" {
   project  = var.gcp_project_id
   location = var.gcp_region
-  name     = "github-connection"
+  name     = "github-connection-2"
 
   github_config {
     app_installation_id = var.github_gcp_installation_id
@@ -24,6 +24,7 @@ resource "google_cloudbuildv2_repository" "my_repository" {
 
 resource "google_cloudbuild_trigger" "repo-trigger" {
   location = "us-central1"
+  name     = "repo-trigger"
 
   repository_event_config {
     repository = google_cloudbuildv2_repository.my_repository.id
