@@ -45,8 +45,9 @@ module "network" {
 module "firewall" {
   source                        = "./modules/firewall"
   network_name                  = module.network.network_id
-  internal_traffic_source_range = "10.1.0.0/24"
-  internet_access_source_ranges = ["0.0.0.0/0"]
+  internal_traffic_source_range = var.internal_traffic_source_range
+  internet_access_source_ranges = var.internet_access_source_ranges
+  cloud_sql_proxy_source_range  = var.cloud_sql_proxy_source_range
 
   depends_on = [
     module.network

@@ -6,6 +6,12 @@ gcp_network_name          = "your-vpc-network-name"
 gcp_region                = "your-gcp-region"
 gcp_service_account_email = "your-service-account-email"
 
+/* ------------------------------ Firewall Configuration ----------------------------- */
+internal_traffic_source_range     = "10.1.0.0/24"
+internet_access_source_ranges     = ["0.0.0.0/0"]
+cloud_sql_proxy_source_range      = "55.44.55.345"
+
+
 /* ------------------------------ GCP CLOUD SQL ----------------------------- */
 
 gcp_db_instance_name      = "your-db-instance-name"
