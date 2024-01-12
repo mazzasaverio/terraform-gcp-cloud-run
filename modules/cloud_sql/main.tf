@@ -11,7 +11,7 @@ resource "google_sql_database_instance" "instance" {
 
       authorized_networks {
         name  = "my-authorized-network"
-        value = "79.21.151.251"
+        value = var.cloud_sql_proxy_source_range
       }
 
     }

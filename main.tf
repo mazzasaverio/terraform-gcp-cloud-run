@@ -58,15 +58,16 @@ module "firewall" {
 module "cloud_sql" {
   source = "./modules/cloud_sql"
 
-  gcp_project_id            = var.gcp_project_id
-  gcp_db_instance_name      = var.gcp_db_instance_name
-  gcp_region                = var.gcp_region
-  gcp_db_version            = var.gcp_db_version
-  gcp_db_user               = var.gcp_db_user
-  gcp_db_password           = var.gcp_db_password
-  gcp_db_name               = var.gcp_db_name
-  gcp_service_account_email = var.gcp_service_account_email
-  network_id                = module.network.network_id
+  gcp_project_id               = var.gcp_project_id
+  gcp_db_instance_name         = var.gcp_db_instance_name
+  gcp_region                   = var.gcp_region
+  gcp_db_version               = var.gcp_db_version
+  gcp_db_user                  = var.gcp_db_user
+  gcp_db_password              = var.gcp_db_password
+  gcp_db_name                  = var.gcp_db_name
+  gcp_service_account_email    = var.gcp_service_account_email
+  network_id                   = module.network.network_id
+  cloud_sql_proxy_source_range = var.cloud_sql_proxy_source_range
 
   depends_on = [
     module.network

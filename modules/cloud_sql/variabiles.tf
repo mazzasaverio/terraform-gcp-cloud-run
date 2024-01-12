@@ -12,6 +12,10 @@ variable "gcp_region" {
   description = "The region where the resources will be created."
   type        = string
 }
+variable "cloud_sql_proxy_source_range" {
+  description = "Source IP range for Cloud SQL proxy."
+  type        = string
+}
 
 variable "gcp_db_version" {
   description = "The database version to use."
