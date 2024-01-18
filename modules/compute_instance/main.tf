@@ -8,6 +8,7 @@ resource "google_compute_instance" "app_instance" {
   boot_disk {
     initialize_params {
       image = var.gcp_instance_image
+      size  = 50
     }
   }
 
@@ -16,6 +17,8 @@ resource "google_compute_instance" "app_instance" {
     subnetwork = var.subnetwork_id
     access_config {}
   }
+
+
 
   metadata = {
     "db-user"                 = var.gcp_db_user

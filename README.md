@@ -2,7 +2,9 @@
 
 ## Introduction
 
-This repository provides configurations for setting up various modular recipes using GCP services. Specifically:
+This repository aims to establish a complete initial setup for those needing to utilize the serverless service of Cloud Run and have a GCE instance, both connected to Cloud SQL, all within a VPC that communicates via private IP. This setup is useful for many use cases that require an efficient and scalable solution for event-driven processing through Cloud Run, which is triggered every time data is uploaded to storage, utilizing PubSub, as well as the use of an instance for deploying results in a web app.
+
+In particular it therefore providesprovides configurations for setting up various modular recipes using GCP services. Specifically:
 
 - **VPC Configuration:** A new VPC is configured with the intent to utilize all services within a single VPC.
 - **Compute Engine Setup:** A compute engine is set up to read the Cloud SQL via a private IP, configured in another module. A `startup-script.sh` is included, which has code to establish SSH connection directly from the local machine.
@@ -34,16 +36,6 @@ This repository provides configurations for setting up various modular recipes u
 - Create a personal access token. Make sure to set your token (classic) to have no expiration date and select the following permissions when prompted in GitHub: repo and read:user. If your app is installed in an organization, make sure to also select the read:org permission.
 
 https://cloud.google.com/build/docs/automating-builds/github/connect-repo-github?generation=2nd-gen#terraform_1
-
-## Enable APIs
-
-Execute the following in Cloud Shell to enable required APIs:
-
-```
-  bash
-
-  gcloud services enable compute.googleapis.com sqladmin.googleapis.com servicenetworking.googleapis.com pubsub.googleapis.com run.googleapis.com cloudbuild.googleapis.com secretmanager.googleapis.com
-```
 
 ## Terraform Configuration
 

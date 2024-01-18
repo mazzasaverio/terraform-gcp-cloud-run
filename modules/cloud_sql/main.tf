@@ -20,8 +20,6 @@ resource "google_sql_database_instance" "instance" {
   deletion_protection = false
 }
 
-
-
 resource "google_sql_user" "user" {
   name     = var.gcp_db_user
   instance = google_sql_database_instance.instance.name
@@ -33,9 +31,9 @@ resource "google_sql_database" "db_name" {
   instance = google_sql_database_instance.instance.name
 }
 
-resource "google_project_iam_member" "cloudsql_client" {
-  project = var.gcp_project_id
-  role    = "roles/cloudsql.client"
-  member  = "serviceAccount:${var.gcp_service_account_email}"
-}
+# resource "google_project_iam_member" "cloudsql_client" {
+#   project = var.gcp_project_id
+#   role    = "roles/cloudsql.client"
+#   member  = "serviceAccount:${var.gcp_service_account_email}"
+# }
 

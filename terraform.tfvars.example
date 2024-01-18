@@ -1,46 +1,72 @@
-/* ------------------------------ GCP ----------------------------- */
+/* ------------------------------ GCP Foundation----------------------------- */
 
-gcp_project_id            = "your-gcp-project-id"
-gcp_credentials_file      = "~/terraform_v15.json"
-gcp_network_name          = "your-vpc-network-name"
-gcp_region                = "your-gcp-region"
-gcp_service_account_email = "your-service-account-email"
+gcp_project_id            = ""
+gcp_project_number        = ""
+gcp_credentials_file      = "~/gcp_credentials_file.json"
+gcp_service_account_name  = "" 
 
-/* ------------------------------ Firewall Configuration ----------------------------- */
-internal_traffic_source_range     = "10.1.0.0/24"
-internet_access_source_ranges     = ["0.0.0.0/0"]
-cloud_sql_proxy_source_range      = "55.44.55.345"
+gcp_services   = ["compute", "cloudresourcemanager", "sqladmin", "iam", "secretmanager","servicenetworking","cloudbuild","run","pubsub"]
 
+gcp_existing_service_account_roles = [
+    "secretmanager.secretAccessor",
+    "cloudsql.client",
+    "viewer",
+    # "cloudbuild.editor",
+    "compute.networkAdmin",
+    "pubsub.publisher",
+    "storage.admin",
+    "editor",
+    "pubsub.admin",
+    "compute.securityAdmin"
+  ]
+gcp_cloud_build_service_account_roles = ["secretmanager.secretAccessor","iam.serviceAccountUser", "compute.admin", "run.admin"]
+
+
+/* ------------------------------ GCP Network ----------------------------- */
+gcp_network_name          = "privatenetworknew"
+gcp_region                = "us-central1"
+gcp_zone                  = "us-central1-c"
+
+/* ------------------------------ GCP Cloud Storage ----------------------------- */
+gcp_bucket_name = ""
 
 /* ------------------------------ GCP CLOUD SQL ----------------------------- */
 
-gcp_db_instance_name      = "your-db-instance-name"
-gcp_db_version            = "POSTGRES_15" # or your preferred version
-gcp_db_user               = "your-db-user"
-gcp_db_password           = "your-db-password"
-gcp_db_name               = "your-db-name"
+gcp_db_instance_name      = ""
+gcp_db_version            = "POSTGRES_15" 
+gcp_db_user               = ""
+gcp_db_password           = ""
+gcp_db_name               = ""
+
+
+/* ------------------------------ Firewall Configuration ----------------------------- */
+internal_traffic_source_range     =
+internet_access_source_ranges     = 
+cloud_sql_proxy_source_range      = 
+
 
 /* ------------------------------ GCP COMPUTE INSTANCE ----------------------------- */
 
-gcp_instance_name         = "your-instance-name"
+gcp_instance_name         = "your-instance-name-2"
 gcp_instance_type         = "e2-medium" # or your preferred type
-gcp_instance_zone         = "your-instance-zone"
+gcp_instance_zone         = "us-central1-c"
 gcp_instance_image        = "ubuntu-os-cloud/ubuntu-2004-lts" # or your preferred image
 gcp_instance_tags         = ["tag1", "tag2"] # or your preferred tags
 
 /* ------------------------------ SSH Configuration ----------------------------- */
 
-instance_ssh_user         = "ubuntu" 
-instance_ssh_public_key   = "add instance_ssh_public_key" 
+instance_ssh_user         = "ubuntu" # Replace with your SSH username
+instance_ssh_public_key   = "" 
+
 
 /* ------------------------------ GCP Cloud Run ----------------------------- */
 
-gcp_pubsub_topic_name = "topic-gcp-v5"
+gcp_pubsub_topic_name = ""
 
 /* ------------------------------- Cloud Build ------------------------------ */
 repo_name = "template-image-cloud-run"
-branch = "master"
+branch = ""
 
-github_token = "github_token"
-github_gcp_installation_id = "github_gcp_installation_id"
-github_remote_uri = "https://github.com/-/-.git"
+github_token = ""
+github_gcp_installation_id = ""
+github_remote_uri = ""
