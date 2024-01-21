@@ -47,6 +47,49 @@ variable "gcp_network_name" {
   type        = string
 }
 
+/* ----------------------------- Secret Manager ----------------------------- */
+
+variable "gcp_db_user" {
+  description = "The name of the db user."
+  type        = string
+}
+
+variable "gcp_db_password" {
+  description = "The password for the db user."
+  type        = string
+
+}
+
+
+
+
+variable "gcp_db_name" {
+  description = "The name of the db."
+  type        = string
+}
+
+variable "gcp_db_port" {
+  description = "The port of the db."
+  type        = string
+}
+
+variable "gcp_instance_name" {
+  description = "The name of the instance"
+  type        = string
+}
+
+variable "instance_ssh_public_key" {
+  description = "The public key to use for SSH access to the instance"
+  type        = string
+}
+
+
+variable "github_token" {
+  description = "The GitHub personal access token."
+  type        = string
+}
+
+
 /* ------------------------------ GCP Cloud Storage ----------------------------- */
 variable "internal_traffic_source_range" {
   description = "Source IP range for internal traffic."
@@ -88,25 +131,6 @@ variable "gcp_db_version" {
   default     = "POSTGRES_15"
 }
 
-variable "gcp_db_user" {
-  description = "The name of the db user."
-  type        = string
-}
-
-variable "gcp_db_password" {
-  description = "The password for the db user."
-  type        = string
-}
-
-variable "gcp_db_name" {
-  description = "The name of the db."
-  type        = string
-}
-
-variable "gcp_instance_name" {
-  description = "The name of the instance"
-  type        = string
-}
 
 variable "gcp_instance_type" {
   description = "The machine type of the instance"
@@ -131,16 +155,6 @@ variable "gcp_instance_tags" {
   default     = []
 }
 
-variable "instance_ssh_user" {
-  description = "The username to use for SSH access to the instance"
-  type        = string
-  default     = "ubuntu"
-}
-
-variable "instance_ssh_public_key" {
-  description = "The public key to use for SSH access to the instance"
-  type        = string
-}
 
 
 variable "gcp_bucket_name" {
@@ -166,10 +180,7 @@ variable "branch" {
   type        = string
 }
 
-variable "github_token" {
-  description = "The GitHub personal access token."
-  type        = string
-}
+
 
 variable "github_gcp_installation_id" {
   description = "The GitHub App installation ID."
@@ -179,4 +190,15 @@ variable "github_gcp_installation_id" {
 variable "github_remote_uri" {
   description = "The GitHub remote URI."
   type        = string
+}
+
+variable "gcp_storage_option" {
+  description = "The storage option to use."
+  type        = string
+}
+
+variable "instance_ssh_user" {
+  description = "The username to use for SSH access to the instance"
+  type        = string
+  default     = "ubuntu"
 }

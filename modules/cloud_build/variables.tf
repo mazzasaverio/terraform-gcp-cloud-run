@@ -11,10 +11,7 @@ variable "gcp_project_number" {
   type        = string
 }
 
-variable "github_token" {
-  description = "The GitHub personal access token."
-  type        = string
-}
+
 
 
 variable "repo_name" {

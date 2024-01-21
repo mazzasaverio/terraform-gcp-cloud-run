@@ -1,3 +1,27 @@
+data "google_secret_manager_secret_version" "db_user" {
+  secret  = "DB_USER_SECRET"
+  project = var.gcp_project_id
+  version = "latest"
+}
+
+data "google_secret_manager_secret_version" "db_pass" {
+  secret  = "DB_PASS_SECRET"
+  project = var.gcp_project_id
+  version = "latest"
+}
+
+
+
+data "google_secret_manager_secret_version" "db_name" {
+  secret  = "DB_NAME_SECRET"
+  project = var.gcp_project_id
+  version = "latest"
+}
+
+
+
+
+
 resource "google_cloud_run_v2_service" "pdf_processor_service" {
   name         = "pdf-processor-service"
   location     = var.gcp_region
@@ -25,19 +49,27 @@ resource "google_cloud_run_v2_service" "pdf_processor_service" {
 
       env {
         name  = "DB_USER"
-        value = var.gcp_db_user
+        value = data.google_secret_manager_secret_version.db_user.secret_data
       }
       env {
         name  = "DB_PASS"
-        value = var.gcp_db_password
+        value = data.google_secret_manager_secret_version.db_pass.secret_data
       }
       env {
         name  = "DB_NAME"
-        value = var.gcp_db_name
+        value = data.google_secret_manager_secret_version.db_name.secret_data
       }
       env {
         name  = "DB_HOST"
-        value = var.db_instance_ip_address
+        value = var.gcp_db_instance_ip_address
+      }
+      env {
+        name  = "STORAGE_OPTION"
+        value = var.gcp_storage_option
+      }
+      env {
+        name  = "GCS_BUCKET_NAME"
+        value = var.gcp_bucket_name
       }
     }
 

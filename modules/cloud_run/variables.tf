@@ -3,20 +3,7 @@ variable "gcp_region" {
   type        = string
 }
 
-variable "gcp_db_user" {
-  description = "Database user for Cloud SQL."
-  type        = string
-}
 
-variable "gcp_db_password" {
-  description = "Database password for Cloud SQL."
-  type        = string
-}
-
-variable "gcp_db_name" {
-  description = "Database name for Cloud SQL."
-  type        = string
-}
 
 variable "network_id" {
   description = "The ID of the VPC network."
@@ -28,7 +15,7 @@ variable "subnetwork_id" {
   type        = string
 }
 
-variable "db_instance_ip_address" {
+variable "gcp_db_instance_ip_address" {
   description = "The private IP address of the Cloud SQL instance."
   type        = string
 }
@@ -48,3 +35,7 @@ variable "gcp_bucket_name" {
   type        = string
 }
 
+variable "gcp_storage_option" {
+  description = "Storage option for the GCS bucket"
+  type        = string
+}

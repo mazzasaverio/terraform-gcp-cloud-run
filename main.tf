@@ -58,6 +58,8 @@ resource "google_project_iam_member" "cloud_build_service_account_iam_roles" {
 
 /* -------------------------- Network and Firewall -------------------------- */
 
+
+
 module "network" {
   source = "./modules/network"
 
@@ -79,6 +81,21 @@ module "firewall" {
   ]
 }
 
+
+module "secret_manager" {
+  source = "./modules/secret_manager"
+
+  gcp_db_user             = var.gcp_db_user
+  gcp_db_password         = var.gcp_db_password
+  gcp_db_name             = var.gcp_db_name
+  gcp_db_port             = var.gcp_db_port
+  gcp_instance_name       = var.gcp_instance_name
+  instance_ssh_public_key = var.instance_ssh_public_key
+  github_token            = var.github_token
+}
+
+
+
 module "cloud_sql" {
   source = "./modules/cloud_sql"
 
@@ -86,15 +103,13 @@ module "cloud_sql" {
   gcp_db_instance_name         = var.gcp_db_instance_name
   gcp_region                   = var.gcp_region
   gcp_db_version               = var.gcp_db_version
-  gcp_db_user                  = var.gcp_db_user
-  gcp_db_password              = var.gcp_db_password
-  gcp_db_name                  = var.gcp_db_name
   gcp_service_account_email    = data.google_service_account.existing_service_account.email
   network_id                   = module.network.network_id
   cloud_sql_proxy_source_range = var.cloud_sql_proxy_source_range
 
   depends_on = [
-    module.network
+    module.network,
+    module.secret_manager
   ]
 }
 
@@ -103,13 +118,16 @@ module "cloud_build" {
   source                     = "./modules/cloud_build"
   gcp_project_id             = var.gcp_project_id
   gcp_project_number         = var.gcp_project_number
-  github_token               = var.github_token
   repo_name                  = var.repo_name
   branch                     = var.branch
   github_gcp_installation_id = var.github_gcp_installation_id
   gcp_region                 = var.gcp_region
   github_remote_uri          = var.github_remote_uri
 
+  depends_on = [
+    module.network,
+    module.secret_manager
+  ]
 }
 
 module "storage" {
@@ -121,46 +139,52 @@ module "storage" {
 }
 
 
-module "compute_instance" {
-  source = "./modules/compute_instance"
+# module "compute_instance" {
+#   source = "./modules/compute_instance"
 
-  gcp_instance_name         = var.gcp_instance_name
-  gcp_instance_type         = var.gcp_instance_type
-  gcp_instance_zone         = var.gcp_instance_zone
-  gcp_instance_image        = var.gcp_instance_image
-  gcp_instance_tags         = var.gcp_instance_tags
-  gcp_service_account_email = data.google_service_account.existing_service_account.email
-  gcp_db_user               = var.gcp_db_user
-  gcp_db_password           = var.gcp_db_password
-  gcp_db_name               = var.gcp_db_name
-  network_id                = module.network.network_id
-  subnetwork_id             = module.network.subnetwork_id
-  db_instance_ip_address    = module.cloud_sql.instance_ip_address
-  instance_ssh_public_key   = var.instance_ssh_public_key
+#   gcp_instance_name         = var.gcp_instance_name
+#   gcp_instance_type         = var.gcp_instance_type
+#   gcp_instance_zone         = var.gcp_instance_zone
+#   gcp_instance_image        = var.gcp_instance_image
+#   gcp_instance_tags         = var.gcp_instance_tags
+#   gcp_service_account_email = data.google_service_account.existing_service_account.email
+#   gcp_db_user               = var.gcp_db_user
+#   gcp_db_password           = var.gcp_db_password
+#   gcp_db_name               = var.gcp_db_name
+#   network_id                = module.network.network_id
+#   subnetwork_id             = module.network.subnetwork_id
+#   db_instance_ip_address    = module.cloud_sql.instance_ip_address
+#   instance_ssh_public_key   = var.instance_ssh_public_key
 
-  depends_on = [
-    module.firewall,
-    module.cloud_sql
-  ]
-}
+
+
+#   depends_on = [
+#     module.firewall,
+#     module.cloud_sql
+#   ]
+# }
 
 
 
 module "cloud_run" {
   source = "./modules/cloud_run"
 
-  gcp_project_id        = var.gcp_project_id
-  gcp_region            = var.gcp_region
-  gcp_db_user           = var.gcp_db_user
-  gcp_db_password       = var.gcp_db_password
-  gcp_db_name           = var.gcp_db_name
-  pdf_uploaded_topic_id = var.gcp_pubsub_topic_name
+  gcp_project_id             = var.gcp_project_id
+  gcp_region                 = var.gcp_region
+  pdf_uploaded_topic_id      = var.gcp_pubsub_topic_name
+  network_id                 = module.network.network_id
+  subnetwork_id              = module.network.subnetwork_id
+  gcp_db_instance_ip_address = module.cloud_sql.instance_ip_address
+  gcp_bucket_name            = module.storage.bucket_name
+  gcp_storage_option         = var.gcp_storage_option
 
-  network_id             = module.network.network_id
-  subnetwork_id          = module.network.subnetwork_id
-  db_instance_ip_address = module.cloud_sql.instance_ip_address
-  gcp_bucket_name        = module.storage.bucket_name
+  depends_on = [
+    module.network,
+    module.secret_manager
+  ]
 }
+
+
 
 
 

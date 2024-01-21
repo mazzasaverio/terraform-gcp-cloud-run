@@ -1,14 +1,6 @@
-
-resource "google_secret_manager_secret" "github_token_secret" {
-  secret_id = "github-token-secret"
-  replication {
-    auto {}
-  }
-}
-
-resource "google_secret_manager_secret_version" "github_token_secret_version" {
-  secret      = google_secret_manager_secret.github_token_secret.id
-  secret_data = var.github_token
+data "google_secret_manager_secret_version" "github_token" {
+  secret  = "github-token-secret"
+  project = var.gcp_project_id
 }
 
 data "google_iam_policy" "secret_accessor" {
@@ -19,8 +11,8 @@ data "google_iam_policy" "secret_accessor" {
 }
 
 resource "google_secret_manager_secret_iam_policy" "policy" {
-  project     = google_secret_manager_secret.github_token_secret.project
-  secret_id   = google_secret_manager_secret.github_token_secret.secret_id
+  project     = var.gcp_project_id
+  secret_id   = "github-token-secret"
   policy_data = data.google_iam_policy.secret_accessor.policy_data
 }
 
@@ -32,10 +24,13 @@ resource "google_cloudbuildv2_connection" "github_connection" {
   github_config {
     app_installation_id = var.github_gcp_installation_id
     authorizer_credential {
-      oauth_token_secret_version = google_secret_manager_secret_version.github_token_secret_version.id
+      oauth_token_secret_version = data.google_secret_manager_secret_version.github_token.id
     }
   }
 }
+
+
+
 
 resource "google_cloudbuildv2_repository" "cloud_build_repository" {
   project           = var.gcp_project_id
