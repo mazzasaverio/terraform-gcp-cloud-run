@@ -24,11 +24,11 @@ apt-get install -y postgresql-client postgresql-client-common >> $LOG_FILE 2>&1
 
 # Setting up environment variables from Secret Manager
 echo "Fetching environment variables from Secret Manager" >> $LOG_FILE
-DB_USER=$(gcloud secrets versions access latest --secret="DB_USER_SECRET" --project="YOUR_PROJECT_ID")
-DB_PASS=$(gcloud secrets versions access latest --secret="DB_PASS_SECRET" --project="YOUR_PROJECT_ID")
-DB_NAME=$(gcloud secrets versions access latest --secret="DB_NAME_SECRET" --project="YOUR_PROJECT_ID")
-DB_HOST=$(gcloud secrets versions access latest --secret="DB_HOST_SECRET" --project="YOUR_PROJECT_ID")
-DB_PORT=$(gcloud secrets versions access latest --secret="DB_PORT_SECRET" --project="YOUR_PROJECT_ID" || echo '5432')
+DB_USER=$(gcloud secrets versions access latest --secret="DB_USER" --project="YOUR_PROJECT_ID")
+DB_PASS=$(gcloud secrets versions access latest --secret="DB_PASS" --project="YOUR_PROJECT_ID")
+DB_NAME=$(gcloud secrets versions access latest --secret="DB_NAME" --project="YOUR_PROJECT_ID")
+DB_HOST=$(gcloud secrets versions access latest --secret="DB_HOST" --project="YOUR_PROJECT_ID")
+DB_PORT=$(gcloud secrets versions access latest --secret="DB_PORT" --project="YOUR_PROJECT_ID" || echo '5432')
 
 echo "Exporting environment variables" >> $LOG_FILE
 echo "export DB_NAME='${DB_NAME}'" >> ~/.profile

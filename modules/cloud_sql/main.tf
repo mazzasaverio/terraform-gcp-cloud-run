@@ -1,19 +1,17 @@
 data "google_secret_manager_secret_version" "db_user" {
-  secret  = "DB_USER_SECRET"
+  secret  = "DB_USER"
   project = var.gcp_project_id
   version = "latest"
 }
 
 data "google_secret_manager_secret_version" "db_pass" {
-  secret  = "DB_PASS_SECRET"
+  secret  = "DB_PASS"
   project = var.gcp_project_id
   version = "latest"
 }
 
-
-
 data "google_secret_manager_secret_version" "db_name" {
-  secret  = "DB_NAME_SECRET"
+  secret  = "DB_NAME"
   project = var.gcp_project_id
   version = "latest"
 }

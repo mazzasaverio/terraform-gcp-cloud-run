@@ -2,13 +2,17 @@
 
 ## Introduction
 
+Questa repo ha lo scopo di fornire un template aggiornato e funzionale al settagio di determiniti servizi partendo da una lista di ricette di partenza preimpostate
+
+- Connessione del cloud sql postgress con cloud run e con compute engine solo tramite ip privato. Qualsiasi comunicazione all'esterno è chiusa tranne una connessione tramite connector al tuo sql management (per esempio dbeaver) tramite l'impostazione del connector
+
 This repository aims to establish a complete initial setup for those needing to utilize the serverless service of Cloud Run and have a GCE instance, both connected to Cloud SQL, all within a VPC that communicates via private IP. This setup is useful for many use cases that require an efficient and scalable solution for event-driven processing through Cloud Run, which is triggered every time data is uploaded to storage, utilizing PubSub, as well as the use of an instance for deploying results in a web app.
 
 In particular it therefore providesprovides configurations for setting up various modular recipes using GCP services. Specifically:
 
 - **VPC Configuration:** A new VPC is configured with the intent to utilize all services within a single VPC.
 - **Compute Engine Setup:** A compute engine is set up to read the Cloud SQL via a private IP, configured in another module. A `startup-script.sh` is included, which has code to establish SSH connection directly from the local machine.
-- **Cloud Run Creation:** A Cloud Run is created in version V2 with Direct VPC Connection to Cloud SQL.
+- **Cloud Run Creation:** A Cloud Run is created in version V2 with Direct VPC Egress Connection to Cloud SQL.
 - **Automated Cloud Build Mechanism:** A mechanism is set where the cloud build is triggered automatically following the code push to the repository that builds the image. An example repository where you can find a sample `cloudbuild.yaml` is at [https://github.com/mazzasaverio/template-image-cloud-run](https://github.com/mazzasaverio/template-image-cloud-run). The test code within tests the connection with the Cloud SQL Postgres database via private IP using FastAPI and SQLAlchemy.
   - As a result, the Cloud Run is always updated with the latest version of the image and is triggered every time a file is uploaded to the GCP storage.
 
@@ -64,7 +68,7 @@ For a secure connection to your Cloud SQL instance from local development enviro
    Launch the proxy with your Cloud SQL instance details. Replace the `[INSTANCE_CONNECTION_NAME]` with your specific Cloud SQL instance connection name:
 
    ```bash
-   ./cloud-sql-proxy --private-ip --credentials-file=/path/to/your/credentials.json --port 5433 [INSTANCE_CONNECTION_NAME]
+   ./cloud-sql-proxy --credentials-file=/path/to/credentials_file.json 'project-name:region:instance-name?port=port_number'
    ```
 
 4. **Connect using DBeaver**:

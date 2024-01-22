@@ -5,7 +5,7 @@
 
 # DB_USER Secret
 resource "google_secret_manager_secret" "db_user_secret" {
-  secret_id = "DB_USER_SECRET"
+  secret_id = "DB_USER"
   replication {
     auto {}
   }
@@ -18,7 +18,7 @@ resource "google_secret_manager_secret_version" "db_user_secret_version" {
 
 # DB_PASS Secret
 resource "google_secret_manager_secret" "db_pass_secret" {
-  secret_id = "DB_PASS_SECRET"
+  secret_id = "DB_PASS"
   replication {
     auto {}
   }
@@ -34,7 +34,7 @@ resource "google_secret_manager_secret_version" "db_pass_secret_version" {
 
 # DB_NAME Secret
 resource "google_secret_manager_secret" "db_name_secret" {
-  secret_id = "DB_NAME_SECRET"
+  secret_id = "DB_NAME"
   replication {
     auto {}
   }

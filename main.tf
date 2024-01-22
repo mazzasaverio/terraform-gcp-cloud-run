@@ -74,8 +74,13 @@ module "network" {
 }
 
 module "firewall" {
-  source           = "./modules/firewall"
-  gcp_network_name = module.network.network_id
+  source                        = "./modules/firewall"
+  gcp_network_name              = module.network.network_id
+  internet_access_source_ranges = var.internet_access_source_ranges
+  internal_traffic_source_range = var.internal_traffic_source_range
+  cloud_sql_proxy_source_range  = var.cloud_sql_proxy_source_range
+
+
   depends_on = [
     module.network
   ]
