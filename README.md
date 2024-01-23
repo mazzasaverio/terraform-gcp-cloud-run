@@ -2,19 +2,13 @@
 
 ## Introduction
 
-Questa repo ha lo scopo di fornire un template aggiornato e funzionale al settagio di determiniti servizi partendo da una lista di ricette di partenza preimpostate
+This repository aims to provide an updated and functional template for setting up specific services, starting from a predefined list of modular recipes using Google Cloud Platform (GCP) services. In detail, it includes configurations for:
 
-- Connessione del cloud sql postgress con cloud run e con compute engine solo tramite ip privato. Qualsiasi comunicazione all'esterno è chiusa tranne una connessione tramite connector al tuo sql management (per esempio dbeaver) tramite l'impostazione del connector
-
-This repository aims to establish a complete initial setup for those needing to utilize the serverless service of Cloud Run and have a GCE instance, both connected to Cloud SQL, all within a VPC that communicates via private IP. This setup is useful for many use cases that require an efficient and scalable solution for event-driven processing through Cloud Run, which is triggered every time data is uploaded to storage, utilizing PubSub, as well as the use of an instance for deploying results in a web app.
-
-In particular it therefore providesprovides configurations for setting up various modular recipes using GCP services. Specifically:
-
-- **VPC Configuration:** A new VPC is configured with the intent to utilize all services within a single VPC.
-- **Compute Engine Setup:** A compute engine is set up to read the Cloud SQL via a private IP, configured in another module. A `startup-script.sh` is included, which has code to establish SSH connection directly from the local machine.
-- **Cloud Run Creation:** A Cloud Run is created in version V2 with Direct VPC Egress Connection to Cloud SQL.
-- **Automated Cloud Build Mechanism:** A mechanism is set where the cloud build is triggered automatically following the code push to the repository that builds the image. An example repository where you can find a sample `cloudbuild.yaml` is at [https://github.com/mazzasaverio/template-image-cloud-run](https://github.com/mazzasaverio/template-image-cloud-run). The test code within tests the connection with the Cloud SQL Postgres database via private IP using FastAPI and SQLAlchemy.
-  - As a result, the Cloud Run is always updated with the latest version of the image and is triggered every time a file is uploaded to the GCP storage.
+- **VPC Configuration:** Configures a new Virtual Private Cloud (VPC) intended for hosting all services within a single network environment.
+- **Private Cloud SQL Connection:** Sets up a Cloud SQL Postgres instance that communicates with Cloud Run and Compute Engine exclusively through a private IP. All external communications are blocked, except for a connection through a connector to your SQL management tool (e.g., DBeaver), configured via the connector settings.
+- **Compute Engine Setup:** Establishes a Compute Engine instance configured to access the Cloud SQL via a private IP, set up in a separate module. This setup includes a `startup-script.sh`, enabling an SSH connection directly from your local machine.
+- **Cloud Run Creation:** Implements a Cloud Run service in version V2, featuring a Direct VPC Egress Connection to Cloud SQL.
+- **Automated Cloud Build Mechanism:** Introduces an automated cloud build process that is triggered by a code push to the repository. This process builds the Docker image. An example `cloudbuild.yaml` can be found at [https://github.com/mazzasaverio/template-image-cloud-run](https://github.com/mazzasaverio/template-image-cloud-run), demonstrating a test connection to the Cloud SQL Postgres database via private IP using FastAPI and SQLAlchemy. This setup ensures that the Cloud Run service is consistently updated with the latest version of the image and activates whenever a file is uploaded to GCP storage.
 
 ## Prerequisites
 
