@@ -144,30 +144,32 @@ module "storage" {
 }
 
 
-# module "compute_instance" {
-#   source = "./modules/compute_instance"
+module "compute_instance" {
+  source = "./modules/compute_instance"
 
-#   gcp_instance_name         = var.gcp_instance_name
-#   gcp_instance_type         = var.gcp_instance_type
-#   gcp_instance_zone         = var.gcp_instance_zone
-#   gcp_instance_image        = var.gcp_instance_image
-#   gcp_instance_tags         = var.gcp_instance_tags
-#   gcp_service_account_email = data.google_service_account.existing_service_account.email
-#   gcp_db_user               = var.gcp_db_user
-#   gcp_db_password           = var.gcp_db_password
-#   gcp_db_name               = var.gcp_db_name
-#   network_id                = module.network.network_id
-#   subnetwork_id             = module.network.subnetwork_id
-#   db_instance_ip_address    = module.cloud_sql.instance_ip_address
-#   instance_ssh_public_key   = var.instance_ssh_public_key
+  gcp_project_id            = var.gcp_project_id
+  gcp_instance_name         = var.gcp_instance_name
+  gcp_instance_type         = var.gcp_instance_type
+  gcp_instance_zone         = var.gcp_instance_zone
+  gcp_instance_image        = var.gcp_instance_image
+  gcp_instance_tags         = var.gcp_instance_tags
+  gcp_service_account_email = data.google_service_account.existing_service_account.email
+  gcp_db_user               = var.gcp_db_user
+  gcp_db_password           = var.gcp_db_password
+  gcp_db_name               = var.gcp_db_name
+  network_id                = module.network.network_id
+  subnetwork_id             = module.network.subnetwork_id
+  db_instance_ip_address    = module.cloud_sql.instance_ip_address
+  instance_ssh_public_key   = var.instance_ssh_public_key
 
 
 
-#   depends_on = [
-#     module.firewall,
-#     module.cloud_sql
-#   ]
-# }
+  depends_on = [
+    module.firewall,
+    module.cloud_sql,
+    module.secret_manager
+  ]
+}
 
 
 
@@ -188,9 +190,6 @@ module "cloud_run" {
     module.secret_manager
   ]
 }
-
-
-
 
 
 module "pubsub" {

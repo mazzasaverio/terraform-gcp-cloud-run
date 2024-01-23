@@ -89,6 +89,9 @@ For more details on using the Cloud SQL Proxy, visit the official documentation:
   ```bash
   ssh -i /path/to/your/private/key your_instance_username@external_ip_address
   ```
+  ```bash
+  chmod 600 ~/.ssh/id_rsa
+  ```
 - **Test Cloud SQL Connection**:
   ```bash
   psql -h private_ip_address -U database_user -d database_name
