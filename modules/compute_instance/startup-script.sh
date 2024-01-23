@@ -37,10 +37,6 @@ echo "export DB_PASS='${DB_PASS}'" >> ~/.profile
 echo "export DB_HOST='${DB_HOST}'" >> ~/.profile
 echo "export DB_PORT='${DB_PORT}'" >> ~/.profile
 
-# Confirm that the variables are written to the profile
-echo "Checking written environment variables in .profile:" >> $LOG_FILE
-grep 'DB_' ~/.profile >> $LOG_FILE
-
 # Fetching instance user and SSH public key
 INSTANCE_USER=$(gcloud secrets versions access latest --secret="INSTANCE_USER" --project="${PROJECT_ID}" 2>&1)
 SSH_PUBLIC_KEY=$(gcloud secrets versions access latest --secret="SSH_PUBLIC_KEY" --project="${PROJECT_ID}" 2>&1) >> $LOG_FILE
