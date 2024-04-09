@@ -177,3 +177,15 @@ variable "secret_key_access_api" {
   description = "The secret key for the access API."
   type        = string
 }
+
+variable "first_superuser" {
+  description = "The first superuser."
+  type        = string
+}
+
+variable "first_superuser_password" {
+  description = "The password for the first superuser."
+  type        = string
+}
+
+

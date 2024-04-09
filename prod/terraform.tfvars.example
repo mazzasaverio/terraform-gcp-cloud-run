@@ -1,0 +1,84 @@
+/* -------------------------------------------------------------------------- */
+/*                               GCP Foundation                               */
+/* -------------------------------------------------------------------------- */
+
+project_id            = ""
+project_number        = ""
+region                = "us-central1"
+zone                  = "us-central1-c"
+
+service_account_name  = ""
+path_credentials_json_file      = ""
+
+
+services   = ["cloudbuild", "artifactregistry", "compute", "sql-component", "sqladmin", "vpcaccess", "redis", "run", "iam", "secretmanager", "servicenetworking"]
+
+
+service_account_roles = [
+   "secretmanager.secretAccessor",
+    "cloudsql.client",
+    "run.viewer",
+    "viewer",
+    "compute.networkAdmin",
+    "run.invoker",
+    "redis.editor",
+    "storage.admin",
+    "editor",
+    "compute.securityAdmin"
+  ]
+
+  cloud_build_service_account_roles = ["secretmanager.secretAccessor","iam.serviceAccountUser", "compute.admin", "run.admin", "run.invoker", "redis.editor"]
+
+
+/* -------------------------------------------------------------------------- */
+/*                                 VPC Network                                */
+/* -------------------------------------------------------------------------- */
+
+  network_name = ""
+  subnetwork_name = ""
+  ip_cidr_range =  ""
+
+/* -------------------------------------------------------------------------- */
+/*                               Secret Manager                               */
+/* -------------------------------------------------------------------------- */
+
+
+# Cloud SQL
+db_user               = ""
+db_password           = ""
+db_name               = ""
+db_port               = 5432
+
+# Cloud Build
+repo_name = ""
+branch = "master"
+
+github_token = ""
+github_installation_id = ""
+github_remote_uri = "https://github.com/<...>/<...>.git"
+
+/* -------------------------------------------------------------------------- */
+/*                                  Cloud SQL                                 */
+/* -------------------------------------------------------------------------- */
+
+db_instance_name      = ""
+db_tier    = "db-custom-1-3840"
+db_version =  "POSTGRES_15" 
+
+/* -------------------------------------------------------------------------- */
+/*                                   OpenAI                                   */
+/* -------------------------------------------------------------------------- */
+
+openai_api_key = "sk-..."
+openai_organization = "org-..."
+
+
+/* -------------------------------------------------------------------------- */
+/*                                   FastAPI                                  */
+/* -------------------------------------------------------------------------- */
+
+
+secret_key_access_api = ""
+
+first_superuser = ""
+first_superuser_password = ""

@@ -94,7 +94,11 @@ module "secret_manager" {
   openai_api_key      = var.openai_api_key
   openai_organization = var.openai_organization
 
-  secret_key_access_api = var.secret_key_access_api
+  secret_key_access_api    = var.secret_key_access_api
+  first_superuser          = var.first_superuser
+  first_superuser_password = var.first_superuser_password
+
+
 
   depends_on = [
     google_project_service.enabled_services,
@@ -117,6 +121,7 @@ module "cloud_sql" {
   db_instance_name = var.db_instance_name
   db_version       = var.db_version
   db_tier          = var.db_tier
+  network_id       = module.vpc.network_id
 
 
   depends_on = [
