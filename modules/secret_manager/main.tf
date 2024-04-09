@@ -1,7 +1,68 @@
 
 
 
-/* -------------------------------- Cloud SQL ------------------------------- */
+/* ----------------------------- OPENAI API ----------------------------- */
+
+resource "google_secret_manager_secret" "openai_api_secret" {
+  secret_id = "OPENAI_API_KEY"
+  replication {
+    auto {}
+  }
+
+}
+
+resource "google_secret_manager_secret_version" "openai_api_secret_version" {
+  secret      = google_secret_manager_secret.openai_api_secret.id
+  secret_data = var.openai_api_key
+}
+
+resource "google_secret_manager_secret" "openai_organization" {
+  secret_id = "OPENAI_ORGANIZATION"
+  replication {
+    auto {}
+  }
+
+}
+
+resource "google_secret_manager_secret_version" "openai_organization_version" {
+  secret      = google_secret_manager_secret.openai_organization.id
+  secret_data = var.openai_api_key
+}
+
+/* --------------------------------- FastAPI -------------------------------- */
+
+
+resource "google_secret_manager_secret" "secret_key_access_api" {
+  secret_id = "SECRET_KEY_ACCESS_API"
+  replication {
+    auto {}
+  }
+
+}
+
+resource "google_secret_manager_secret_version" "secret_key_access_api_version" {
+  secret      = google_secret_manager_secret.secret_key_access_api.id
+  secret_data = var.openai_api_key
+}
+
+/* ----------------------------- GITHUB ACCOUNT ----------------------------- */
+
+resource "google_secret_manager_secret" "github_token_secret" {
+  secret_id = "GITHUB_ACCESS_TOKEN"
+  replication {
+    auto {}
+  }
+}
+
+resource "google_secret_manager_secret_version" "github_token_secret_version" {
+  secret      = google_secret_manager_secret.github_token_secret.id
+  secret_data = var.github_token
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*                                  Cloud SQL                                 */
+/* -------------------------------------------------------------------------- */
 
 # DB_USER Secret
 resource "google_secret_manager_secret" "db_user_secret" {
@@ -13,7 +74,7 @@ resource "google_secret_manager_secret" "db_user_secret" {
 
 resource "google_secret_manager_secret_version" "db_user_secret_version" {
   secret      = google_secret_manager_secret.db_user_secret.id
-  secret_data = var.gcp_db_user
+  secret_data = var.db_user
 }
 
 # DB_PASS Secret
@@ -26,7 +87,7 @@ resource "google_secret_manager_secret" "db_pass_secret" {
 
 resource "google_secret_manager_secret_version" "db_pass_secret_version" {
   secret      = google_secret_manager_secret.db_pass_secret.id
-  secret_data = var.gcp_db_password
+  secret_data = var.db_password
 }
 
 
@@ -42,7 +103,7 @@ resource "google_secret_manager_secret" "db_name_secret" {
 
 resource "google_secret_manager_secret_version" "db_name_secret_version" {
   secret      = google_secret_manager_secret.db_name_secret.id
-  secret_data = var.gcp_db_name
+  secret_data = var.db_name
 }
 
 # DB_PORT Secret
@@ -55,52 +116,5 @@ resource "google_secret_manager_secret" "db_port" {
 
 resource "google_secret_manager_secret_version" "db_port_secret_version" {
   secret      = google_secret_manager_secret.db_port.id
-  secret_data = var.gcp_db_port
-}
-
-
-
-/* ------------------------- Compute Engine Istance ------------------------- */
-
-
-# INSTANCE_USER Secret
-resource "google_secret_manager_secret" "instance_user_secret" {
-  secret_id = "INSTANCE_USER"
-  replication {
-    auto {}
-  }
-}
-
-resource "google_secret_manager_secret_version" "instance_user_secret_version" {
-  secret      = google_secret_manager_secret.instance_user_secret.id
-  secret_data = var.instance_ssh_user
-}
-
-
-# SSH_PUBLIC_KEY Secret
-resource "google_secret_manager_secret" "ssh_public_key_secret" {
-  secret_id = "SSH_PUBLIC_KEY"
-  replication {
-    auto {}
-  }
-}
-
-resource "google_secret_manager_secret_version" "ssh_public_key_secret_version" {
-  secret      = google_secret_manager_secret.ssh_public_key_secret.id
-  secret_data = var.instance_ssh_public_key
-}
-
-
-/* ----------------------------- GITHUB ACCOUNT ----------------------------- */
-
-resource "google_secret_manager_secret" "github_token_secret" {
-  secret_id = "github-token-secret"
-  replication {
-    auto {}
-  }
-}
-
-resource "google_secret_manager_secret_version" "github_token_secret_version" {
-  secret      = google_secret_manager_secret.github_token_secret.id
-  secret_data = var.github_token
+  secret_data = var.db_port
 }

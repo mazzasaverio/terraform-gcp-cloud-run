@@ -1,17 +1,15 @@
 
-variable "gcp_project_id" {
+variable "project_id" {
   description = "The GCP project ID."
   type        = string
 }
 
 
 
-variable "gcp_project_number" {
+variable "project_number" {
   description = "The GCP project number."
   type        = string
 }
-
-
 
 
 variable "repo_name" {
@@ -24,12 +22,12 @@ variable "branch" {
   type        = string
 }
 
-variable "github_gcp_installation_id" {
+variable "github_installation_id" {
   description = "The GitHub App installation ID."
   type        = string
 }
 
-variable "gcp_region" {
+variable "region" {
   description = "The GCP region."
   type        = string
 }

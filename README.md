@@ -2,43 +2,26 @@
 
 ## Introduction
 
-This repository aims to provide an updated and functional template for setting up specific services, starting from a predefined list of modular recipes using Google Cloud Platform (GCP) services. In detail, it includes configurations for:
-
-- **VPC Configuration:** Configures a new Virtual Private Cloud (VPC) intended for hosting all services within a single network environment.
-- **Private Cloud SQL Connection:** Sets up a Cloud SQL Postgres instance that communicates with Cloud Run and Compute Engine exclusively through a private IP. All external communications are blocked, except for a connection through a connector to your SQL management tool (e.g., DBeaver), configured via the connector settings.
-- **Compute Engine Setup:** Establishes a Compute Engine instance configured to access the Cloud SQL via a private IP, set up in a separate module. This setup includes a `startup-script.sh`, enabling an SSH connection directly from your local machine.
-- **Cloud Run Creation:** Implements a Cloud Run service in version V2, featuring a Direct VPC Egress Connection to Cloud SQL.
-- **Automated Cloud Build Mechanism:** Introduces an automated cloud build process that is triggered by a code push to the repository. This process builds the Docker image. An example `cloudbuild.yaml` can be found at [https://github.com/mazzasaverio/template-image-cloud-run](https://github.com/mazzasaverio/template-image-cloud-run), demonstrating a test connection to the Cloud SQL Postgres database via private IP using FastAPI and SQLAlchemy. This setup ensures that the Cloud Run service is consistently updated with the latest version of the image and activates whenever a file is uploaded to GCP storage.
+This repo is intended to serve as an initial template for setting up and managing the infrastructure required to deploy an image that performs RAG operations on a Postgres database hosted on Cloud SQL (an image that enables the pgvector extension), and it is executed via Cloud Run V2 connected to Redis for caching purposes.
 
 ## Prerequisites
 
-### 1. Google Cloud Platform Account
-
 - **Sign Up**: Ensure you have an active GCP account. [Sign up here](https://cloud.google.com/) if needed.
-
-### 2. Project Setup
-
 - **New Project**: Create a new GCP project. Note down the project ID for future use.
-
-### 3. Service Account
-
 - **Create Service Account**: Create a service account with 'Owner' permissions in your GCP project.
 - **Generate Key File**: Generate a JSON key file for this service account and store it securely.
-
-### 4. Billing
-
 - **Enable Billing**: Ensure billing is enabled on your GCP project for using paid services.
-
-### 5. Connecting Cloud Build to Your GitHub Account
-
-- Create a personal access token. Make sure to set your token (classic) to have no expiration date and select the following permissions when prompted in GitHub: repo and read:user. If your app is installed in an organization, make sure to also select the read:org permission.
-
-https://cloud.google.com/build/docs/automating-builds/github/connect-repo-github?generation=2nd-gen#terraform_1
 
 ## Terraform Configuration
 
 - **Rename File**: Change `terraform.tfvars.example` to `terraform.tfvars`.
 - **Insert Credentials**: Add your credentials to the `terraform.tfvars` file.
+
+## Connecting Cloud Build to Your GitHub Account
+
+- Create a personal access token by navigating to the "Developer settings" in your GitHub account. Select "Personal access tokens" and then "Generate new token". Ensure your token (classic) has no expiration date and grant the following permissions when prompted in GitHub: `repo` and `read:user`. For applications in organizations, also include `read:org` permission.
+
+https://cloud.google.com/build/docs/automating-builds/github/connect-repo-github?generation=2nd-gen#terraform_1
 
 ## Connecting to Cloud SQL using Cloud SQL Proxy (Example with DBeaver)
 
@@ -81,17 +64,6 @@ For more details on using the Cloud SQL Proxy, visit the official documentation:
   terraform apply -target=module.compute_instance
   ```
 
-- **Add SSH Key**:
-  ```bash
-  ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
-  ```
-- **Connect via SSH**:
-  ```bash
-  ssh -i /path/to/your/private/key your_instance_username@external_ip_address
-  ```
-  ```bash
-  chmod 600 ~/.ssh/id_rsa
-  ```
 - **Test Cloud SQL Connection**:
   ```bash
   psql -h private_ip_address -U database_user -d database_name

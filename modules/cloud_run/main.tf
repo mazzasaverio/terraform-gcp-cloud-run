@@ -1,48 +1,68 @@
 data "google_secret_manager_secret_version" "db_user" {
   secret  = "DB_USER"
-  project = var.gcp_project_id
+  project = var.project_id
   version = "latest"
 }
 
 data "google_secret_manager_secret_version" "db_pass" {
   secret  = "DB_PASS"
-  project = var.gcp_project_id
+  project = var.project_id
   version = "latest"
 }
 
 data "google_secret_manager_secret_version" "db_name" {
   secret  = "DB_NAME"
-  project = var.gcp_project_id
+  project = var.project_id
+
   version = "latest"
 }
 
+data "google_secret_manager_secret_version" "github_token" {
+  secret  = "GITHUB_ACCESS_TOKEN"
+  project = var.project_id
 
+  version = "latest"
+}
+data "google_secret_manager_secret_version" "openai_api" {
+  secret  = "OPENAI_API_KEY"
+  project = var.project_id
+  version = "latest"
+}
 
+data "google_secret_manager_secret_version" "openai_organization" {
+  secret  = "OPENAI_ORGANIZATION"
+  project = var.project_id
+  version = "latest"
+}
 
+data "google_secret_manager_secret_version" "secret_key_access_api" {
+  secret  = "SECRET_KEY_ACCESS_API"
+  project = var.project_id
+  version = "latest"
+}
 
-resource "google_cloud_run_v2_service" "pdf_processor_service" {
-  name         = "pdf-processor-service"
-  location     = var.gcp_region
+resource "google_cloud_run_v2_service" "default" {
+  name         = "cloudrun-service"
+  location     = "us-central1"
   launch_stage = "BETA"
-  ingress      = "INGRESS_TRAFFIC_INTERNAL_ONLY"
-
-
-  traffic {
-    percent = 100
-    type    = "TRAFFIC_TARGET_ALLOCATION_TYPE_LATEST"
-  }
+  ingress      = "INGRESS_TRAFFIC_ALL"
 
   template {
     containers {
-      image = "gcr.io/${var.gcp_project_id}/your-service-image:latest"
-
+      image = "gcr.io/${var.project_id}/${var.repo_name}:latest"
       resources {
-        cpu_idle          = true
-        startup_cpu_boost = true
         limits = {
           cpu    = "2"
-          memory = "4Gi"
+          memory = "1024Mi"
         }
+      }
+      ports {
+        container_port = 8080
+      }
+
+      volume_mounts {
+        name       = "cloudsql"
+        mount_path = "/cloudsql"
       }
 
       env {
@@ -59,23 +79,42 @@ resource "google_cloud_run_v2_service" "pdf_processor_service" {
       }
       env {
         name  = "DB_HOST"
-        value = var.gcp_db_instance_ip_address
+        value = var.db_instance_ip_address
       }
       env {
-        name  = "STORAGE_OPTION"
-        value = var.gcp_storage_option
+        name  = "DB_PORT"
+        value = "5432"
       }
       env {
-        name  = "GCS_BUCKET_NAME"
-        value = var.gcp_bucket_name
+        name  = "GITHUB_ACCESS_TOKEN"
+        value = data.google_secret_manager_secret_version.github_token.secret_data
+      }
+      env {
+        name  = "OPENAI_API_KEY"
+        value = data.google_secret_manager_secret_version.openai_api.secret_data
+      }
+      env {
+        name  = "OPENAI_ORGANIZATION"
+        value = data.google_secret_manager_secret_version.openai_organization.secret_data
+      }
+      env {
+        name  = "SECRET_KEY_ACCESS_API"
+        value = data.google_secret_manager_secret_version.secret_key_access_api.secret_data
+      }
+
+
+    }
+
+    volumes {
+      name = "cloudsql"
+      cloud_sql_instance {
+        instances = [var.cloud_sql_connection_name]
       }
     }
 
-
-
     vpc_access {
       egress = "ALL_TRAFFIC"
-      #egress = "PRIVATE_RANGES_ONLY"
+
       network_interfaces {
         network    = var.network_id
         subnetwork = var.subnetwork_id
@@ -83,4 +122,16 @@ resource "google_cloud_run_v2_service" "pdf_processor_service" {
       }
     }
   }
+  traffic {
+    type    = "TRAFFIC_TARGET_ALLOCATION_TYPE_LATEST"
+    percent = 100
+  }
+
+}
+
+resource "google_cloud_run_service_iam_member" "public_invoker" {
+  location = "us-central1"
+  service  = google_cloud_run_v2_service.default.name
+  role     = "roles/run.invoker"
+  member   = "allUsers"
 }
